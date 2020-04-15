@@ -9,23 +9,26 @@ class FetchClientToken {
   }
 
   perform() {
-    let clientTokenRequest = new Request(`${API_BASE_URL}/users/${this.user.username}/clientToken`,
+    let clientTokenRequest = new Request(`${API_BASE_URL}/users/${this._user.username}/clientToken`,
       {
         headers: {
-          "Authorization": this.user.secret,
-          "Session": this.user.sessionID
+          "Authorization": this._user.secret,
+          "Session": this._user.sessionID
         }
       });
 
     return fetch(clientTokenRequest)
       .then(res => {
         if (res.ok)
-          res.json().then(data => this._clientToken = data.access_token);
+          return res.json()
+            .then(data => this._clientToken = data.access_token)
+            .then(() => this);
         else {
           this._status = STATUS_FAILURE;
-          res.json().then(err => this._error = err);
+          return res.json()
+            .then(err => this._error = err)
+            .then(() => this);
         }
-        return this;
       });
   }
 
@@ -41,3 +44,5 @@ class FetchClientToken {
     return this._error;
   }
 }
+
+export default FetchClientToken;

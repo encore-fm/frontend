@@ -22,9 +22,10 @@ class SuggestSong {
       .then(res => {
         if (!res.ok) {
           this._status = STATUS_FAILURE;
-          res.json().then(err => this._error = err)
+          return res.json()
+            .then(err => this._error = err)
+            .then(() => this);
         }
-        return this;
       });
   }
 
@@ -36,3 +37,5 @@ class SuggestSong {
     return this._error;
   }
 }
+
+export default SuggestSong;

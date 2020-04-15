@@ -20,12 +20,15 @@ class FetchAuthToken {
     return fetch(clientTokenRequest)
       .then(res => {
         if (res.ok)
-          res.json().then(data => this.user.authToken = data.access_token);
+          return res.json()
+            .then(data => this.user.authToken = data.access_token)
+            .then(() => this);
         else {
           this._status= STATUS_FAILURE;
-          res.json().then(err => this._error = err);
+          res.json()
+            .then(err => this._error = err)
+            .then(() => this);
         }
-        return this;
       });
   }
 
@@ -42,3 +45,5 @@ class FetchAuthToken {
     return this._error;
   }
 }
+
+export default FetchAuthToken;

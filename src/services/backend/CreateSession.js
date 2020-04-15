@@ -18,22 +18,28 @@ class CreateSession {
     return fetch(createRequest)
       .then(res => {
         if (res.ok)
-          res.json().then(data => this.parseData(data));
+          return res.json()
+            .then(data => this.parseData(data))
+            .then(() => this);
         else {
           this._status = STATUS_FAILURE;
-          res.json().then(err => this._error = err);
+          return res.json()
+            .then(err => this._error = err)
+            .then(() => this);
         }
-        return this;
       });
   }
 
   parseData(data) {
-    this.user.id = data.user_info.id;
-    this.user.secret = data.user_info.secret;
-    this.user.sessionID = data.user_info.session_id;
-    this.user.isAdmin = data.user_info.is_admin;
-    this.user.score = data.user_info.score;
-    this.user.authUrl = data.auth_url;
+    this._user = {
+      ...this.user,
+      id: data.user_info.id,
+      secret: data.user_info.secret,
+      sessionID: data.user_info.session_id,
+      isAdmin: data.user_info.is_admin,
+      score: data.user_info.score,
+      authUrl: data.auth_url
+    };
   }
 
 

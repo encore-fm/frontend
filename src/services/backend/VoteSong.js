@@ -24,9 +24,10 @@ class VoteSong {
       .then(res => {
         if (!res.ok) {
           this._status = STATUS_FAILURE;
-          res.json().then(err => this._error = err);
+          res.json()
+            .then(err => this._error = err)
+            .then(() => this);
         }
-        return this;
       })
   }
 
@@ -38,3 +39,5 @@ class VoteSong {
     return this._error;
   }
 }
+
+export default VoteSong;

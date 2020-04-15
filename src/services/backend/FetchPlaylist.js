@@ -20,12 +20,15 @@ class FetchPlaylist {
     return fetch(listSongsRequest)
       .then(res => {
         if (res.ok)
-          res.json().then(data => this.parseData(data));
+          return res.json()
+            .then(data => this.parseData(data))
+            .then(() => this);
         else {
           this._status = STATUS_FAILURE;
-          res.json().then(err => this._error = err);
+          return res.json()
+            .then(err => this._error = err)
+            .then(() => this);
         }
-        return this;
       });
   }
 
@@ -55,3 +58,5 @@ class FetchPlaylist {
     return this._error;
   }
 }
+
+export default FetchPlaylist;

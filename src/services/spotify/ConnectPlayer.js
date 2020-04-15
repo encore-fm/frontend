@@ -10,7 +10,7 @@ class ConnectPlayer {
 
   perform() {
     let payload = {
-      "device_ids": [this.deviceID],
+      "device_ids": [this._deviceID],
       "play": false
     };
     let playerRequest = new Request(
@@ -18,7 +18,7 @@ class ConnectPlayer {
       {
         method: 'PUT',
         headers: {
-          'Authorization': `Bearer ${this.token}`,
+          'Authorization': `Bearer ${this._token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
@@ -30,9 +30,12 @@ class ConnectPlayer {
       .then(res => {
         if (!res.ok) {
           this._status = STATUS_FAILURE;
-          res.json().then(err => this._error = err);
+          return res.json()
+            .then(err => this._error = err)
+            .then(() => this);
         }
-        return this;
+        else
+          return this;
       });
   }
 
