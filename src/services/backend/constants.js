@@ -7,3 +7,7 @@ export const INTERNAL_SERVER_ERROR = "InternalServerError";
 export const BAD_VOTE_ERROR = "BadVoteError";
 export const SESSION_CONFLICT_ERROR = "SessionConflictError";
 export const SONG_NOT_FOUND_ERROR = "SongNotFoundError";
+
+// status for fetch results
+export const STATUS_SUCCESS = 'success';
+export const STATUS_FAILURE = 'failure';
