@@ -1,4 +1,4 @@
-import {API_BASE_URL, STATUS_FAILURE, STATUS_SUCCESS} from "./constants";
+import {API_BASE_URL, FETCH_ERROR, STATUS_FAILURE, STATUS_SUCCESS} from "./constants";
 
 class SuggestSong {
   constructor(user, songID) {
@@ -26,6 +26,10 @@ class SuggestSong {
             .then(err => this._error = err)
             .then(() => this);
         }
+      }, err => {
+        this._status = STATUS_FAILURE;
+        this._error = FETCH_ERROR;
+        return this;
       });
   }
 

@@ -11,3 +11,9 @@ export const SONG_NOT_FOUND_ERROR = "SongNotFoundError";
 // status for fetch results
 export const STATUS_SUCCESS = 'success';
 export const STATUS_FAILURE = 'failure';
+
+// error to dispatch at promise rejection
+export const FETCH_ERROR = {
+  error: 'FetchError',
+  description: 'An unexpected error has occurred while trying to fetch the requested data.'
+};
