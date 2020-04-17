@@ -1,0 +1,12 @@
+@import '../variables';
+
+.Content {
+  font-size: 22px;
+  background-color: $background_color;
+  color: $text_color;
+  padding: 1em 1em;
+}
+
+.Content_borderBottom {
+  border-bottom: 4px solid white;
+}

@@ -3,6 +3,8 @@ import { render } from 'react-dom'
 import Root from './containers/Root'
 import * as serviceWorker from './serviceWorker'
 
+import './index.scss';
+
 render(<Root />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
