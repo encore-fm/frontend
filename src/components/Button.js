@@ -1,15 +1,11 @@
-import React, {Component} from "react";
+import React from 'react';
 
-class Button extends Component {
-  render() {
-    return (
-      <div className="Button">
-        <button onClick={this.props.clickHandler}>
-          {this.props.content}
-        </button>
-      </div>
-    );
-  }
-}
+import './Button.scss';
+
+const Button = ({text, type}) => {
+  return (
+    <button className="Button" type={type}>{text}</button>
+  )
+};
 
 export default Button;

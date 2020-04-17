@@ -1,0 +1,15 @@
+@import '../variables';
+
+.Button {
+  background-color: $background_color;
+  color: $text_color;
+  border: 2px solid white;
+
+  outline: none;
+  
+  &:hover {
+    cursor: pointer;
+    background-color: $text_color;
+    color: $background_color;
+  }
+}
