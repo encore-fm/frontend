@@ -1,8 +1,8 @@
-import SuggestSong from "../services/backend/SuggestSong";
+import SuggestSong from "../services/backend/activities/SuggestSong";
 import {STATUS_FAILURE} from "../services/backend/constants";
 
 export const REQUEST_SUGGEST_SONG = 'REQUEST_SUGGEST_SONG';
-export const SUGGEST_SONG_FAILED = 'SUGGEST_SONG_FAILED';
+export const SUGGEST_SONG_FAILURE = 'SUGGEST_SONG_FAILURE';
 
 export const suggestSong = (user, songID) => {
   return dispatch => {
@@ -10,7 +10,7 @@ export const suggestSong = (user, songID) => {
     return new SuggestSong(user, songID).perform()
       .then(res => {
         if (res.status === STATUS_FAILURE)
-          dispatch(suggestSongFailed(res.error));
+          dispatch(suggestSongFailure(res.error));
       });
   };
 };
@@ -21,8 +21,8 @@ const requestSuggestSong = () => ({
   error: null
 });
 
-const suggestSongFailed = error => ({
-  type: SUGGEST_SONG_FAILED,
+const suggestSongFailure = error => ({
+  type: SUGGEST_SONG_FAILURE,
   payload: null,
   error: error
 });

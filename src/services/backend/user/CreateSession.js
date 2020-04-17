@@ -1,4 +1,5 @@
-import {API_BASE_URL, FETCH_ERROR, STATUS_FAILURE, STATUS_SUCCESS} from "./constants";
+import {API_BASE_URL, STATUS_SUCCESS} from "../constants";
+import fetchWithData from "../helpers/fetchWithData";
 
 class CreateSession {
   constructor(adminName) {
@@ -15,26 +16,10 @@ class CreateSession {
     let createRequest = new Request(`${API_BASE_URL}/admin/${this.user.username}/createSession`,
       {method: 'POST'});
 
-    return fetch(createRequest)
-      .then(res => {
-        if (res.ok)
-          return res.json()
-            .then(data => this.parseData(data))
-            .then(() => this);
-        else {
-          this._status = STATUS_FAILURE;
-          return res.json()
-            .then(err => this._error = err)
-            .then(() => this);
-        }
-      }, err => {
-        this._status = STATUS_FAILURE;
-        this._error = FETCH_ERROR;
-        return this;
-      });
+    return fetchWithData(createRequest, this, this.parseData);
   }
 
-  parseData(data) {
+  parseData = data => {
     this._user = {
       ...this.user,
       id: data.user_info.id,
@@ -44,11 +29,15 @@ class CreateSession {
       score: data.user_info.score,
       authUrl: data.auth_url
     };
-  }
+  };
 
 
   get status() {
     return this._status;
+  }
+
+  set status(value) {
+    this._status = value;
   }
 
   get user() {
@@ -57,6 +46,10 @@ class CreateSession {
 
   get error() {
     return this._error;
+  }
+
+  set error(value) {
+    this._error = value;
   }
 }
 

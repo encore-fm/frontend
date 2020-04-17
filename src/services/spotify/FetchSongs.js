@@ -1,4 +1,5 @@
-import {STATUS_FAILURE, STATUS_SUCCESS} from "../backend/constants";
+import {STATUS_SUCCESS} from "../backend/constants";
+import fetchWithData from "../backend/helpers/fetchWithData";
 
 class FetchSongs {
   constructor(query, token) {
@@ -11,24 +12,14 @@ class FetchSongs {
 
   // executes the spotify search request with the given query
   perform() {
-    let searchEndpointUrl = `https://api.spotify.com/v1/search?q=${this._query}&type=track`;
+    let searchRequest = new Request(`https://api.spotify.com/v1/search?q=${this._query}&type=track`, {
+      headers: {'Authorization': `Bearer ${this._token}`}
+    });
 
-    return fetch(searchEndpointUrl, {headers: {'Authorization': `Bearer ${this._token}`}})
-      .then(res => {
-        if (res.ok)
-          return res.json()
-            .then(data => this.parseData(data))
-            .then(() => this);
-        else {
-          this._status = STATUS_FAILURE;
-          return res.json()
-            .then(err => this._error = err)
-            .then(() => this);
-        }
-      });
+    return fetchWithData(searchRequest, this, this.parseData);
   }
 
-  parseData(data) {
+  parseData = data => {
     this._results =  this.results.concat(
       data.tracks.items.map(track => (
         {
@@ -40,10 +31,14 @@ class FetchSongs {
           trackDuration: track.duration_ms
         }
       )));
-  }
+  };
 
   get status() {
     return this._status;
+  }
+
+  set status(value) {
+    this._status = value;
   }
 
   get results() {
@@ -52,6 +47,10 @@ class FetchSongs {
 
   get error() {
     return this._error;
+  }
+
+  set error(value) {
+    this._error = value;
   }
 }
 

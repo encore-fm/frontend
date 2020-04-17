@@ -1,4 +1,5 @@
-import {API_BASE_URL, FETCH_ERROR, STATUS_FAILURE, STATUS_SUCCESS} from "./constants";
+import {API_BASE_URL, STATUS_SUCCESS} from "../constants";
+import fetchWithoutData from "../helpers/fetchWithoutData";
 
 class VoteSong {
   constructor(user, songID, voteAction) {
@@ -20,27 +21,23 @@ class VoteSong {
         }
       });
 
-    return fetch(voteRequest)
-      .then(res => {
-        if (!res.ok) {
-          this._status = STATUS_FAILURE;
-          res.json()
-            .then(err => this._error = err)
-            .then(() => this);
-        }
-      }, err => {
-        this._status = STATUS_FAILURE;
-        this._error = FETCH_ERROR;
-        return this;
-      })
+    return fetchWithoutData(voteRequest, this);
   }
 
   get status() {
     return this._status;
   }
 
+  set status(value) {
+    this._status = value;
+  }
+
   get error() {
     return this._error;
+  }
+
+  set error(value) {
+    this._error = value;
   }
 }
 

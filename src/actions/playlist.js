@@ -1,4 +1,4 @@
-import FetchPlaylist from "../services/backend/FetchPlaylist";
+import FetchPlaylist from "../services/backend/fetching/FetchPlaylist";
 import {STATUS_SUCCESS} from "../services/backend/constants";
 
 export const REQUEST_PLAYLIST = 'REQUEST_PLAYLIST';

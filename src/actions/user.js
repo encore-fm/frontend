@@ -1,7 +1,7 @@
-import CreateSession from '../services/backend/CreateSession'
+import CreateSession from '../services/backend/user/CreateSession'
 import {STATUS_SUCCESS} from "../services/backend/constants";
-import JoinSession from "../services/backend/JoinSession";
-import FetchAuthToken from "../services/backend/FetchAuthToken";
+import JoinSession from "../services/backend/user/JoinSession";
+import FetchAuthToken from "../services/backend/fetching/FetchAuthToken";
 
 export const CREATE_SUCCESS = 'CREATE_SUCCESS';
 export const CREATE_FAILURE = 'CREATE_FAILURE';

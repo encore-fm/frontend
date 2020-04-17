@@ -1,4 +1,4 @@
-import FetchClientToken from "../services/backend/FetchClientToken";
+import FetchClientToken from "../services/backend/fetching/FetchClientToken";
 import {STATUS_SUCCESS} from "../services/backend/constants";
 
 export const REQUEST_CLIENT_TOKEN = 'REQUEST_CLIENT_TOKEN';

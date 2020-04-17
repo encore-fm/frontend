@@ -1,4 +1,5 @@
-import {API_BASE_URL, FETCH_ERROR, STATUS_FAILURE, STATUS_SUCCESS} from "./constants";
+import {API_BASE_URL, STATUS_SUCCESS} from "../constants";
+import fetchWithData from "../helpers/fetchWithData";
 
 class FetchPlaylist {
   constructor(user) {
@@ -17,26 +18,10 @@ class FetchPlaylist {
         }
       });
 
-    return fetch(listSongsRequest)
-      .then(res => {
-        if (res.ok)
-          return res.json()
-            .then(data => this.parseData(data))
-            .then(() => this);
-        else {
-          this._status = STATUS_FAILURE;
-          return res.json()
-            .then(err => this._error = err)
-            .then(() => this);
-        }
-      }, err => {
-        this._status = STATUS_FAILURE;
-        this._error = FETCH_ERROR;
-        return this;
-      });
+    return fetchWithData(listSongsRequest, this, this.parseData);
   }
 
-  parseData(data) {
+  parseData = data => {
     this._playlist = this.playlist.concat(
       data.map(track => (
         {
@@ -48,10 +33,14 @@ class FetchPlaylist {
           trackDuration: track.duration_ms
         }
       )));
-  }
+  };
 
   get status() {
     return this._status;
+  }
+
+  set status(value) {
+    this._status = value;
   }
 
   get playlist() {
@@ -60,6 +49,10 @@ class FetchPlaylist {
 
   get error() {
     return this._error;
+  }
+
+  set error(value) {
+    this._error = value;
   }
 }
 

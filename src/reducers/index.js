@@ -6,6 +6,7 @@ import playlist from "./playlist";
 import songs from "./songs";
 import isFetching from "./isFetching";
 import clientToken from "./clientToken";
+import player from "./player";
 
 // todo: think about using redux persist
 export const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ export const rootReducer = combineReducers({
   user,
   playlist,
   songs,
+  player,
   clientToken,
   isFetching,
   error

@@ -1,5 +1,5 @@
 import {STATUS_FAILURE} from "../services/backend/constants";
-import VoteSong from "../services/backend/VoteSong";
+import VoteSong from "../services/backend/activities/VoteSong";
 
 export const REQUEST_VOTE_SONG = 'REQUEST_VOTE_SONG';
 export const VOTE_SONG_FAILURE = 'VOTE_SONG_FAILURE';
