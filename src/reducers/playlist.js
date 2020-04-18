@@ -1,8 +1,8 @@
-import {FETCH_PLAYLIST_SUCCESS} from "../actions/playlist";
+import {SET_PLAYLIST} from "../actions/playlist";
 
 export default (state = [], action) => {
   switch (action.type) {
-    case FETCH_PLAYLIST_SUCCESS:
+    case SET_PLAYLIST:
       return [...action.payload];
     default:
       return state;

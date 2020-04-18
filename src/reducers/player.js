@@ -1,15 +1,15 @@
 import {SET_PLAYER_STATE} from "../actions/player";
 
 const initialState = {
-  currentTrack: null,
-  positionMs: null,
-  paused: true
+  currentSong: null,
+  isPlaying: false,
+  progress: 0
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_PLAYER_STATE:
-      return {...state};
+      return {...action.payload};
     default:
       return state;
   }

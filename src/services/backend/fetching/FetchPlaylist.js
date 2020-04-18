@@ -1,5 +1,6 @@
 import {API_BASE_URL, STATUS_SUCCESS} from "../constants";
 import fetchWithData from "../helpers/fetchWithData";
+import parsePlaylist from "../helpers/parsePlaylist";
 
 class FetchPlaylist {
   constructor(user) {
@@ -18,26 +19,9 @@ class FetchPlaylist {
         }
       });
 
-    return fetchWithData(listSongsRequest, this, this.parseData);
+    return fetchWithData(listSongsRequest, this,
+      data => this._playlist = this.playlist.concat(parsePlaylist(data)));
   }
-
-  parseData = data => {
-    this._playlist = this.playlist.concat(
-      data.map(track => (
-        {
-          trackName: track.name,
-          trackID: track.id,
-          albumName: track.album_name,
-          artists: track.artists,
-          coverUrl: track.cover_url,
-          trackDuration: track.duration_ms,
-          suggestedBy: track.suggested_by,
-          score: track.score,
-          upvoters: track.upvoters,
-          downvoters: track.downvoters,
-        }
-      )));
-  };
 
   get status() {
     return this._status;
