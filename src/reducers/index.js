@@ -28,6 +28,6 @@ export default persistReducer({
   whitelist: [
     'isLogged',
     'user',
-    'error'
+    'error',
   ]
 }, rootReducer);

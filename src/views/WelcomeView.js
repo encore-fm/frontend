@@ -1,10 +1,9 @@
 import React from 'react';
 import ContentWrapper from '../components/ContentWrapper';
-import CreateSessionForm from "../containers/CreateSessionForm";
-import {connect} from "react-redux";
-import {useHistory} from "react-router-dom";
+import {Link, useHistory} from 'react-router-dom';
+import {connect} from 'react-redux';
 
-const CreateSessionView = (props) => {
+const WelcomeView = (props) => {
 
   // redirect user to player view if already logged in
   const history = useHistory();
@@ -12,11 +11,10 @@ const CreateSessionView = (props) => {
 
   return (
     <ContentWrapper>
-      creating a new session.<br />
-      please choose your username.<br />
-      <br />
-
-      <CreateSessionForm/>
+      <div>
+        this is encore.<br/>
+        <Link to="/create">create</Link> a session or <Link to={null}>join</Link>.
+      </div>
     </ContentWrapper>
   )
 };
@@ -25,4 +23,4 @@ export default connect(
   state => ({
     isLogged: state.isLogged,
   })
-)(CreateSessionView);
+)(WelcomeView);

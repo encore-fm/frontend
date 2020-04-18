@@ -20,6 +20,6 @@ export default (state = false, action) => {
     case REQUEST_PLAYER_SEEK:
       return true;
     default:
-      return state;
+      return false;
   }
 }

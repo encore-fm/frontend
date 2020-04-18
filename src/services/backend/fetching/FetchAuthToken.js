@@ -19,7 +19,7 @@ class FetchAuthToken {
       });
 
     return fetchWithData(clientTokenRequest, this,
-        data => this.user.authTagLength = data.access_token);
+        data => this.user.authToken = data.access_token);
   }
 
 

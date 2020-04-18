@@ -12,6 +12,12 @@
   border-bottom: 2px solid white;
   outline: none;
   width: 100%;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  border-radius: 0;
+
+  padding: 0;
 }
 
 .DefaultTextField_error {

@@ -41,7 +41,7 @@ export const fetchAuthToken = user => {
     return new FetchAuthToken(user).perform()
       .then(res => {
         if (res.status === STATUS_SUCCESS)
-          dispatch(fetchAuthTokenSuccess(res.user));
+          dispatch(fetchAuthTokenSuccess(res.user.authToken));
         else
           dispatch(fetchAuthTokenFailure(res.error));
       });

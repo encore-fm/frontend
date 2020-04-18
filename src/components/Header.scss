@@ -1,3 +1,5 @@
+@import '../variables';
+
 .Header {
   top: 0;
   position: sticky;
@@ -8,6 +10,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  background-color: $background_color;
 
   line-height: 1;
   border-bottom: 4px solid white;

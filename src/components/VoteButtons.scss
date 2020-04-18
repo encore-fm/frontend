@@ -1,0 +1,10 @@
+.VoteButtons {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .VoteButtons_score {
+    text-align: center;
+  }
+}

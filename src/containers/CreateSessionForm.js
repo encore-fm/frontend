@@ -40,6 +40,6 @@ export default connect(
   state => ({
     isLogged: state.isLogged,
     user: state.user,
-    error: state.error
+    error: state.error,
   })
 )(CreateSessionForm);

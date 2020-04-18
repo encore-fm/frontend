@@ -1,0 +1,30 @@
+@import "../variables";
+
+.IconMinus {
+  position: relative;
+  opacity: 1;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:before {
+    position: absolute;
+    content: ' ';
+    color: $text_color;
+    left: 50%;
+    height: 100%;
+    width: 4px;
+    background-color: $text_color;
+  }
+
+  &:before {
+    transform: rotate(90deg);
+  }
+
+  &.highlight:before, &.highlight:after {
+    background-color: $highlight_color;
+  }
+}
+
+
