@@ -1,5 +1,6 @@
 import React from 'react';
 import './Header.scss';
+import {Link} from "react-router-dom";
 
 const Header = () => {
   return (
@@ -8,7 +9,7 @@ const Header = () => {
       <nav className="Header_navigation">
         <ul>
           <li>sync</li>
-          <li>add</li>
+          <li><Link to="/add">add</Link></li>
         </ul>
       </nav>
     </header>

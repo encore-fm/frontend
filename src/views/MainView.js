@@ -1,8 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 
 import PlayList from '../containers/PlayList';
+import SongSearch from '../containers/SongSearch';
 
 const MainView = (props) => {
 
@@ -10,8 +11,13 @@ const MainView = (props) => {
   const history = useHistory();
   if (!props.isLogged) history.push("/");
 
+  const path = window.location.pathname;
+
   return (
-    <PlayList/>
+    <div className="MainView">
+      {path === '/player' && <PlayList/>}
+      {path === '/add' && <SongSearch/>}
+    </div>
   )
 };
 

@@ -16,12 +16,12 @@ class App extends Component {
       <Router>
         <div className="App">
           <Header/>
-
           <Switch>
             <Route exact path="/" component={WelcomeView}/>
             <Route path="/join/:sessionID?" component={null}/>
             <Route path="/create" component={CreateSessionView}/>
             <Route path="/player" component={MainView}/>
+            <Route path="/add" component={MainView}/>
             <Route path="/profile" component={null}/>
           </Switch>
         </div>

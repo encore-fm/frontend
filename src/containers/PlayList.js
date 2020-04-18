@@ -7,6 +7,8 @@ import {API_BASE_URL} from "../services/backend/constants";
 import parsePlaylist from "../services/backend/helpers/parsePlaylist";
 import {setPlayerState} from "../actions/player";
 
+import './PlayList.scss';
+
 const PlayList = (props) => {
 
   const [stateChangeCounter, setStateChanged] = useState(0);

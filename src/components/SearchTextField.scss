@@ -1,0 +1,29 @@
+@import "../variables";
+
+.SongSearchTextField {
+  z-index: 40;
+  padding: 1em;
+  border-bottom: 4px solid white;
+
+  position: sticky;
+  top: 0;
+
+  background-color: $background_color;
+
+  display: flex;
+}
+
+.SongSearchTextField_input {
+  width: 100%;
+
+  background-color: $background_color;
+  color: $text_color;
+
+  border: 0;
+
+  outline: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  border-radius: 0;
+}

@@ -13,7 +13,7 @@ const WelcomeView = (props) => {
     <ContentWrapper>
       <div>
         this is encore.<br/>
-        <Link to="/create">create</Link> a session or <Link to={null}>join</Link>.
+        <Link to="/create">create</Link> a session or <Link to="/create">join</Link>.
       </div>
     </ContentWrapper>
   )
