@@ -5,6 +5,7 @@ import {useHistory} from 'react-router-dom';
 import PlayList from '../containers/PlayList';
 import SongSearch from '../containers/SongSearch';
 import {authenticate} from "../actions/user";
+import Player from "../containers/Player";
 
 const MainView = (props) => {
   const history = useHistory();
@@ -25,6 +26,7 @@ const MainView = (props) => {
     <div className="MainView">
       {path === '/player' && <PlayList/>}
       {path === '/add' && <SongSearch/>}
+      <Player />
     </div>
   )
 };

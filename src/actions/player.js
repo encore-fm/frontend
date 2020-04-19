@@ -3,6 +3,7 @@ import PlayerPause from "../services/backend/player/PlayerPause";
 import PlayerSkip from "../services/backend/player/PlayerSkip";
 import PlayerSeek from "../services/backend/player/PlayerSeek";
 import createAsyncThunk from "./helpers/createAsyncThunk";
+import FetchPlayerState from "../services/backend/fetching/FetchPlayerState";
 
 export const REQUEST_PLAYER_PLAY = 'REQUEST_PLAYER_PLAY';
 export const PLAYER_PLAY_FAILURE = 'PLAYER_PLAY_FAILURE';
@@ -15,6 +16,10 @@ export const PLAYER_SKIP_FAILURE = 'PLAYER_SKIP_FAILURE';
 
 export const REQUEST_PLAYER_SEEK = 'REQUEST_PLAYER_SEEK';
 export const PLAYER_SEEK_FAILURE = 'PLAYER_SEEK_FAILURE';
+
+export const REQUEST_PLAYER_STATE = 'REQUEST_PLAYER_STATE';
+export const PLAYER_STATE_FAILURE = 'PLAYER_STATE_FAILURE';
+
 
 export const SET_PLAYER_STATE = 'SET_PLAYER_STATE';
 
@@ -55,6 +60,16 @@ export const seek = (user, positionMs) => {
     () => requestPlayerSeek(),
     null,
     res => playerSeekFailure(res.error)
+  );
+};
+
+export const initPlayerState = user => {
+  let serviceInstance = new FetchPlayerState(user);
+  return createAsyncThunk(
+    serviceInstance,
+    () => requestPlayerState(),
+    res => setPlayerState(res.playerState),
+    res => requestPlayerStateFailure(res.error)
   );
 };
 
@@ -107,6 +122,18 @@ const requestPlayerSeek = () => ({
 
 const playerSeekFailure = error => ({
   type: PLAYER_SEEK_FAILURE,
+  payload: null,
+  error: error
+});
+
+const requestPlayerState = () => ({
+  type: REQUEST_PLAYER_STATE,
+  payload: null,
+  error: null
+});
+
+const requestPlayerStateFailure = error => ({
+  type: PLAYER_STATE_FAILURE,
   payload: null,
   error: error
 });
