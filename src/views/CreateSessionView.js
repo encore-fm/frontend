@@ -5,10 +5,11 @@ import {connect} from "react-redux";
 import {useHistory} from "react-router-dom";
 
 const CreateSessionView = (props) => {
+  const {user, isLogged} = props;
 
   // redirect user to player view if already logged in
   const history = useHistory();
-  if (props.isLogged) history.push("/player");
+  if (isLogged && user && user.spotifyAuthorized) history.push("/player");
 
   return (
     <ContentWrapper>
@@ -23,6 +24,7 @@ const CreateSessionView = (props) => {
 
 export default connect(
   state => ({
+    user: state.user,
     isLogged: state.isLogged,
   })
 )(CreateSessionView);

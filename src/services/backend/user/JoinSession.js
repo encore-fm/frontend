@@ -1,5 +1,6 @@
 import {API_BASE_URL, STATUS_SUCCESS} from "../constants";
 import fetchWithData from "../helpers/fetchWithData";
+import {parseUserData} from "./parse";
 
 class JoinSession {
   constructor(username, sessionID) {
@@ -21,15 +22,9 @@ class JoinSession {
   }
 
   parseData = data => {
-    this._user = {
-      ...this.user,
-      id: data.user_info.id,
-      secret: data.user_info.secret,
-      isAdmin: data.user_info.is_admin,
-      score: data.user_info.score,
-      authUrl: data.auth_url
-    };
+    this._user = parseUserData(this._user, data)
   };
+
 
   get status() {
     return this._status;
