@@ -2,7 +2,7 @@ import React from 'react';
 
 import './DefaultTextField.scss';
 
-const DefaultTextField = ({value, onChange, placeholder, autofocus = false, error = null}) => {
+const DefaultTextField = ({value, onChange, placeholder, styles = {}, autofocus = false, error = null}) => {
   return (
     <div className="DefaultTextFieldWrapper">
       <input
@@ -11,6 +11,7 @@ const DefaultTextField = ({value, onChange, placeholder, autofocus = false, erro
         placeholder={placeholder}
         autoFocus={autofocus}
         onChange={onChange}
+        style={styles}
       />
       <div className="DefaultTextField_error">{error.description}</div>
     </div>

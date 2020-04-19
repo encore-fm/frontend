@@ -9,6 +9,7 @@ import playlist from "./playlist";
 import songs from "./songs";
 import isFetching from "./isFetching";
 import clientToken from "./clientToken";
+import sessionInfo from "./sessionInfo";
 import player from "./player";
 
 const rootReducer = combineReducers({
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   songs,
   player,
   clientToken,
+  sessionInfo,
   isFetching,
   error
 });
