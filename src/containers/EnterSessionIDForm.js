@@ -9,7 +9,7 @@ const EnterSessionIDForm = (props) => {
   const history = useHistory();
   const [sessionID, setSessionID] = useState('');
 
-  const {user, error, sessionInfo} = props;
+  const {error, sessionInfo} = props;
 
   useEffect(() => {
     if (sessionInfo && sessionInfo.admin_name) history.push(`/join/${sessionID}`)
@@ -21,7 +21,7 @@ const EnterSessionIDForm = (props) => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    if (sessionID) props.dispatch(fetchSessionInfo(user, sessionID));
+    if (sessionID) props.dispatch(fetchSessionInfo(sessionID));
   };
 
   const inputStyles = {
@@ -52,7 +52,6 @@ const EnterSessionIDForm = (props) => {
 export default connect(
   state => ({
     sessionInfo: state.sessionInfo,
-    user: state.user,
     error: state.error,
   })
 )(EnterSessionIDForm);

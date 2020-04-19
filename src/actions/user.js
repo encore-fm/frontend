@@ -2,6 +2,7 @@ import CreateSession from '../services/backend/user/CreateSession'
 import JoinSession from "../services/backend/user/JoinSession";
 import FetchAuthToken from "../services/backend/fetching/FetchAuthToken";
 import createAsyncThunk from "./helpers/createAsyncThunk";
+import EncoreAuth from "../services/backend/EncoreAuth";
 
 export const CREATE_SUCCESS = 'CREATE_SUCCESS';
 export const CREATE_FAILURE = 'CREATE_FAILURE';
@@ -10,6 +11,7 @@ export const JOIN_FAILURE = 'JOIN_FAILURE';
 export const REQUEST_AUTH_TOKEN = 'REQUEST_AUTH_TOKEN';
 export const FETCH_AUTH_TOKEN_SUCCESS = 'FETCH_AUTH_TOKEN_SUCCESS';
 export const FETCH_AUTH_TOKEN_FAILURE = 'FETCH_AUTH_TOKEN_FAILURE';
+export const AUTH_FAILURE = 'AUTH_FAILURE';
 
 export const createSession = adminName => {
   let serviceInstance = new CreateSession(adminName);
@@ -40,6 +42,22 @@ export const fetchAuthToken = user => {
     res => fetchAuthTokenFailure(res.error)
   );
 };
+
+export const authenticate = user => {
+  let serviceInstance = new EncoreAuth(user);
+  return createAsyncThunk(
+    serviceInstance,
+    null,
+    null,
+    res => authFailure(res.error),
+  );
+};
+
+export const authFailure = error => ({
+  type: AUTH_FAILURE,
+  payload: null,
+  error: error
+});
 
 const createSuccess = user => ({
   type: CREATE_SUCCESS,

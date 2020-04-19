@@ -2,12 +2,19 @@ import React from 'react';
 import ContentWrapper from '../components/ContentWrapper';
 import {Link, useHistory} from 'react-router-dom';
 import {connect} from 'react-redux';
+import {authenticate} from "../actions/user";
 
 const WelcomeView = (props) => {
+  const history = useHistory();
+  const {user} = props;
 
   // redirect user to player view if already logged in
-  const history = useHistory();
-  if (props.isLogged) history.push("/player");
+  if (user) {
+    props.dispatch(authenticate(user))
+      .then(_ => {
+        if (props.isLogged) history.push("/player");
+      });
+  }
 
   return (
     <ContentWrapper>
@@ -22,5 +29,6 @@ const WelcomeView = (props) => {
 export default connect(
   state => ({
     isLogged: state.isLogged,
+    user: state.user,
   })
 )(WelcomeView);

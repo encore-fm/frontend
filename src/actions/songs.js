@@ -1,5 +1,6 @@
 import FetchSongs from "../services/spotify/FetchSongs";
 import createAsyncThunk from "./helpers/createAsyncThunk";
+import {clearClientToken} from "./clientToken";
 
 export const REQUEST_SONGS = 'REQUEST_SONGS';
 export const SET_SONGS = 'SET_SONGS';
@@ -11,7 +12,8 @@ export const fetchSongs = (query, token) => {
     serviceInstance,
     () => requestSongs(),
     res => setSongs(res.results),
-    res => fetchSongsFailure(res.error)
+    res => fetchSongsFailure(res.error),
+    _ => clearClientToken()
   );
 };
 

@@ -2,7 +2,7 @@ import FetchClientToken from "../services/backend/fetching/FetchClientToken";
 import createAsyncThunk from "./helpers/createAsyncThunk";
 
 export const REQUEST_CLIENT_TOKEN = 'REQUEST_CLIENT_TOKEN';
-export const FETCH_CLIENT_TOKEN_SUCCESS = 'FETCH_CLIENT_TOKEN_SUCCESS';
+export const SET_CLIENT_TOKEN = 'SET_CLIENT_TOKEN';
 export const FETCH_CLIENT_TOKEN_FAILURE = 'FETCH_CLIENT_TOKEN_FAILURE';
 
 export const fetchClientToken = user => {
@@ -10,9 +10,13 @@ export const fetchClientToken = user => {
   return createAsyncThunk(
     serviceInstance,
     () => requestClientToken(),
-    res => fetchClientTokenSuccess(res.clientToken),
+    res => setClientToken(res.clientToken),
     res => fetchClientTokenFailure(res.error)
   );
+};
+
+export const clearClientToken = () => {
+  return setClientToken(null);
 };
 
 const requestClientToken = () => ({
@@ -21,8 +25,8 @@ const requestClientToken = () => ({
   error: null
 });
 
-const fetchClientTokenSuccess = clientToken => ({
-  type: FETCH_CLIENT_TOKEN_SUCCESS,
+const setClientToken = clientToken => ({
+  type: SET_CLIENT_TOKEN,
   payload: clientToken,
   error: null
 });

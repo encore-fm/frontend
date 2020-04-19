@@ -7,10 +7,12 @@ export const INTERNAL_SERVER_ERROR = "InternalServerError";
 export const BAD_VOTE_ERROR = "BadVoteError";
 export const SESSION_CONFLICT_ERROR = "SessionConflictError";
 export const SONG_NOT_FOUND_ERROR = "SongNotFoundError";
+export const REQUEST_NOT_AUTHORIZED_ERROR = "RequestNotAuthorizedError";
 
 // status for fetch results
 export const STATUS_SUCCESS = 'success';
 export const STATUS_FAILURE = 'failure';
+export const STATUS_UNAUTHORIZED = 'unauthorized';
 
 // error to dispatch at promise rejection
 export const FETCH_ERROR = {

@@ -5,10 +5,10 @@ export const REQUEST_SESSION_INFO = 'REQUEST_SESSION_INFO';
 export const FETCH_SESSION_INFO_SUCCESS = 'FETCH_SESSION_INFO_SUCCESS';
 export const FETCH_SESSION_INFO_FAILURE = 'FETCH_SESSION_INFO_FAILURE';
 
-export const fetchSessionInfo = (user, sessionID) => {
+export const fetchSessionInfo = sessionID => {
   return dispatch => {
     dispatch(requestSessionInfo());
-    return new FetchSessionInfo(user, sessionID).perform()
+    return new FetchSessionInfo(sessionID).perform()
       .then(res => {
         if (res.status === STATUS_SUCCESS)
           dispatch(fetchSessionInfoSuccess(res.sessionInfo));

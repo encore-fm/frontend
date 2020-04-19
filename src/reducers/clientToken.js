@@ -1,8 +1,8 @@
-import {FETCH_CLIENT_TOKEN_SUCCESS} from "../actions/clientToken";
+import {SET_CLIENT_TOKEN} from "../actions/clientToken";
 
 export default (state = null, action) => {
   switch (action.type) {
-    case FETCH_CLIENT_TOKEN_SUCCESS:
+    case SET_CLIENT_TOKEN:
       return action.payload;
     default:
       return state;

@@ -4,12 +4,20 @@ import {useHistory} from 'react-router-dom';
 
 import PlayList from '../containers/PlayList';
 import SongSearch from '../containers/SongSearch';
+import {authenticate} from "../actions/user";
 
 const MainView = (props) => {
+  const history = useHistory();
+  const {user} = props;
 
   // redirect user to welcome view if not logged in
-  const history = useHistory();
-  if (!props.isLogged) history.push("/");
+  if (!user) history.push("/");
+
+  // authenticate user
+  props.dispatch(authenticate(user))
+    .then(_ => {
+      if (!props.isLogged) history.push("/");
+    });
 
   const path = window.location.pathname;
 
@@ -24,6 +32,7 @@ const MainView = (props) => {
 export default connect(
   state => ({
     isLogged: state.isLogged,
+    user: state.user,
   })
 )(MainView);
 

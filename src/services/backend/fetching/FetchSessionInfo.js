@@ -2,22 +2,15 @@ import {API_BASE_URL, STATUS_SUCCESS} from "../constants";
 import fetchWithData from "../helpers/fetchWithData";
 
 class FetchSessionInfo {
-  constructor(user, sessionID) {
+  constructor(sessionID) {
     this._status = STATUS_SUCCESS;
-    this._user = user;
     this._sessionID = sessionID;
     this._sessionInfo = {};
     this._error = null;
   }
 
   perform() {
-    let fetchSessionInfoRequest = new Request(`${API_BASE_URL}/sessionInfo/${this._sessionID}`,
-      {
-        headers: {
-          "Authorization": this._user.secret,
-          "Session": this._user.sessionID
-        }
-      });
+    let fetchSessionInfoRequest = new Request(`${API_BASE_URL}/sessionInfo/${this._sessionID}`);
 
     return fetchWithData(fetchSessionInfoRequest, this, this.parseData);
   }

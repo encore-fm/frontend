@@ -21,7 +21,7 @@ const JoinSessionForm = (props) => {
   const [stage, setStage] = useState(STAGES.NAME);
 
   useEffect(() => {
-    props.dispatch(fetchSessionInfo(user, sessionID));
+    props.dispatch(fetchSessionInfo(sessionID));
   }, []);
 
   useEffect(() => {
