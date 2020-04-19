@@ -1,7 +1,7 @@
 import CreateSession from '../services/backend/user/CreateSession'
-import {STATUS_SUCCESS} from "../services/backend/constants";
 import JoinSession from "../services/backend/user/JoinSession";
 import FetchAuthToken from "../services/backend/fetching/FetchAuthToken";
+import createAsyncThunk from "./helpers/createAsyncThunk";
 
 export const CREATE_SUCCESS = 'CREATE_SUCCESS';
 export const CREATE_FAILURE = 'CREATE_FAILURE';
@@ -12,40 +12,33 @@ export const FETCH_AUTH_TOKEN_SUCCESS = 'FETCH_AUTH_TOKEN_SUCCESS';
 export const FETCH_AUTH_TOKEN_FAILURE = 'FETCH_AUTH_TOKEN_FAILURE';
 
 export const createSession = adminName => {
-  return dispatch => {
-    return new CreateSession(adminName).perform()
-      .then(res => {
-        if (res.status === STATUS_SUCCESS)
-          dispatch(createSuccess(res.user));
-        else
-          dispatch(createFailure(res.error))
-      })
-  }
+  let serviceInstance = new CreateSession(adminName);
+  return createAsyncThunk(
+    serviceInstance,
+    null,
+    res => createSuccess(res.user),
+    res => createFailure(res.error)
+  );
 };
 
 export const joinSession = (username, sessionID) => {
-  return dispatch => {
-    return new JoinSession(username, sessionID).perform()
-      .then(res => {
-        if (res.status === STATUS_SUCCESS)
-          dispatch(joinSuccess(res.user));
-        else
-          dispatch(joinFailure(res.error));
-      })
-  }
+  let serviceInstance = new JoinSession(username, sessionID);
+  return createAsyncThunk(
+    serviceInstance,
+    null,
+    res => joinSuccess(res.user),
+    res => joinFailure(res.error)
+  );
 };
 
 export const fetchAuthToken = user => {
-  return dispatch => {
-    dispatch(requestAuthToken());
-    return new FetchAuthToken(user).perform()
-      .then(res => {
-        if (res.status === STATUS_SUCCESS)
-          dispatch(fetchAuthTokenSuccess(res.user.authToken));
-        else
-          dispatch(fetchAuthTokenFailure(res.error));
-      });
-  };
+  let serviceInstance = new FetchAuthToken(user);
+  return createAsyncThunk(
+    serviceInstance,
+    () => requestAuthToken(),
+    res => fetchAuthTokenSuccess(res.user.authToken),
+    res => fetchAuthTokenFailure(res.error)
+  );
 };
 
 const createSuccess = user => ({

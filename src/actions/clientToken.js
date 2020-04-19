@@ -1,21 +1,18 @@
 import FetchClientToken from "../services/backend/fetching/FetchClientToken";
-import {STATUS_SUCCESS} from "../services/backend/constants";
+import createAsyncThunk from "./helpers/createAsyncThunk";
 
 export const REQUEST_CLIENT_TOKEN = 'REQUEST_CLIENT_TOKEN';
 export const FETCH_CLIENT_TOKEN_SUCCESS = 'FETCH_CLIENT_TOKEN_SUCCESS';
 export const FETCH_CLIENT_TOKEN_FAILURE = 'FETCH_CLIENT_TOKEN_FAILURE';
 
 export const fetchClientToken = user => {
-  return dispatch => {
-    dispatch(requestClientToken());
-    return new FetchClientToken(user).perform()
-      .then(res => {
-        if (res.status === STATUS_SUCCESS)
-          dispatch(fetchClientTokenSuccess(res.clientToken));
-        else
-          dispatch(fetchClientTokenFailure(res.error));
-      });
-  };
+  let serviceInstance = new FetchClientToken(user);
+  return createAsyncThunk(
+    serviceInstance,
+    () => requestClientToken(),
+    res => fetchClientTokenSuccess(res.clientToken),
+    res => fetchClientTokenFailure(res.error)
+  );
 };
 
 const requestClientToken = () => ({

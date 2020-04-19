@@ -1,21 +1,18 @@
 import FetchPlaylist from "../services/backend/fetching/FetchPlaylist";
-import {STATUS_SUCCESS} from "../services/backend/constants";
+import createAsyncThunk from "./helpers/createAsyncThunk";
 
 export const REQUEST_PLAYLIST = 'REQUEST_PLAYLIST';
 export const SET_PLAYLIST = 'SET_PLAYLIST';
 export const FETCH_PLAYLIST_FAILURE = 'FETCH_PLAYLIST_FAILURE';
 
 export const fetchPlaylist = user => {
-  return dispatch => {
-    dispatch(requestPlaylist());
-    return new FetchPlaylist(user).perform()
-      .then(res => {
-        if (res._status === STATUS_SUCCESS)
-          dispatch(setPlaylist(res.playlist));
-        else
-          dispatch(fetchPlaylistFailure(res.error));
-      });
-  };
+  let serviceInstance = new FetchPlaylist(user);
+  return createAsyncThunk(
+    serviceInstance,
+    () => requestPlaylist(),
+    res => setPlaylist(res.playlist),
+    res => fetchPlaylistFailure(res.error)
+  );
 };
 
 const requestPlaylist = () => ({

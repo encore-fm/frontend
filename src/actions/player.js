@@ -1,8 +1,8 @@
 import PlayerPlay from "../services/backend/player/PlayerPlay";
-import {STATUS_FAILURE} from "../services/backend/constants";
 import PlayerPause from "../services/backend/player/PlayerPause";
 import PlayerSkip from "../services/backend/player/PlayerSkip";
 import PlayerSeek from "../services/backend/player/PlayerSeek";
+import createAsyncThunk from "./helpers/createAsyncThunk";
 
 export const REQUEST_PLAYER_PLAY = 'REQUEST_PLAYER_PLAY';
 export const PLAYER_PLAY_FAILURE = 'PLAYER_PLAY_FAILURE';
@@ -19,48 +19,50 @@ export const PLAYER_SEEK_FAILURE = 'PLAYER_SEEK_FAILURE';
 export const SET_PLAYER_STATE = 'SET_PLAYER_STATE';
 
 export const play = user => {
-  return dispatch => {
-    dispatch(requestPlayerPlay());
-    return new PlayerPlay(user).perform()
-      .then(res => {
-        if (res.status === STATUS_FAILURE)
-          dispatch(playerPlayFailure(res.error));
-      });
-  };
+  let serviceInstance = new PlayerPlay(user);
+  return createAsyncThunk(
+    serviceInstance,
+    () => requestPlayerPlay(),
+    null,
+    res => playerPlayFailure(res.error)
+  );
 };
 
 export const pause = user => {
-  return dispatch => {
-    dispatch(requestPlayerPause());
-    return new PlayerPause(user).perform()
-      .then(res => {
-        if (res.status === STATUS_FAILURE)
-          dispatch(playerPauseFailure(res.error));
-      });
-  };
+  let serviceInstance = new PlayerPause(user);
+  return createAsyncThunk(
+    serviceInstance,
+    () => requestPlayerPause(),
+    null,
+    res => playerPauseFailure(res.error)
+  );
 };
 
 export const skip = user => {
-  return dispatch => {
-    dispatch(requestPlayerSkip());
-    return new PlayerSkip(user).perform()
-      .then(res => {
-        if (res.status === STATUS_FAILURE)
-          dispatch(playerSkipFailure(res.error));
-      });
-  };
+  let serviceInstance = new PlayerSkip(user);
+  return createAsyncThunk(
+    serviceInstance,
+    () => requestPlayerSkip(),
+    null,
+    res => playerSkipFailure(res.error)
+  );
 };
 
 export const seek = (user, positionMs) => {
-  return dispatch => {
-    dispatch(requestPlayerSeek());
-    return new PlayerSeek(user, positionMs).perform()
-      .then(res => {
-        if (res.status === STATUS_FAILURE)
-          dispatch(playerSeekFailure(res.error));
-      });
-  };
+  let serviceInstance = new PlayerSeek(user, positionMs);
+  return createAsyncThunk(
+    serviceInstance,
+    () => requestPlayerSeek(),
+    null,
+    res => playerSeekFailure(res.error)
+  );
 };
+
+export const setPlayerState = player => ({
+  type: SET_PLAYER_STATE,
+  payload: player,
+  error: null
+});
 
 const requestPlayerPlay = () => ({
   type: REQUEST_PLAYER_PLAY,
@@ -107,10 +109,4 @@ const playerSeekFailure = error => ({
   type: PLAYER_SEEK_FAILURE,
   payload: null,
   error: error
-});
-
-export const setPlayerState = player => ({
-  type: SET_PLAYER_STATE,
-  payload: player,
-  error: null
 });
