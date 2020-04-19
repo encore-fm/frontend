@@ -1,7 +1,7 @@
 import React from "react";
 
 import './SearchTextField.scss';
-import IconClose from "./IconClose";
+import IconClose from "./icons/IconClose";
 
 const SearchTextField = ({onChange, value, onClose}) => {
   return (

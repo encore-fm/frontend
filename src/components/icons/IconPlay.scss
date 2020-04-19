@@ -1,0 +1,14 @@
+@import "../../variables";
+
+.IconPlay {
+  background-image: url("IconPlay.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  &:hover {
+    cursor: pointer;
+    background-image: url("IconPlayBlue.svg");
+  }
+}
+
+

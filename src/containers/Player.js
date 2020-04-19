@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import {API_BASE_URL} from "../services/backend/constants";
-import {initPlayerState, setPlayerState} from "../actions/player";
+import {initPlayerState, pause, play, setPlayerState, skip} from "../actions/player";
 
 import "./Player.scss";
+import AdminPlayerControls from "../components/PlayerControls/AdminPlayerControls";
+import UserPlayerControls from "../components/PlayerControls/UserPlayerControls";
 
 const Player = (props) => {
   const {user, player} = props;
@@ -30,6 +32,14 @@ const Player = (props) => {
     props.dispatch(setPlayerState(data));
   };
 
+  const handlePlayPause = (setPlaying) => {
+    setPlaying ? props.dispatch(play(user)) : props.dispatch(pause(user));
+  };
+
+  const handleSkip = () => {
+    props.dispatch(skip(user));
+  };
+
   if (!player || !player.current_song) return "";
 
   const {current_song} = player;
@@ -44,6 +54,15 @@ const Player = (props) => {
         <br />
         suggested by <span className="highlight">{current_song.suggested_by}</span>
       </div>
+      {user.isAdmin ?
+        <AdminPlayerControls
+          isPlaying={player.is_playing}
+          handlePlayPause={handlePlayPause}
+          handleSkip={handleSkip}
+        /> :
+        <UserPlayerControls
+          isPlaying={player.is_playing}
+        />}
     </div>
   )
 };

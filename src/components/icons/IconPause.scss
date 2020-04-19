@@ -1,0 +1,14 @@
+@import "../../variables";
+
+.IconPause{
+  background-image: url("IconPause.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  &:hover {
+    cursor: pointer;
+    background-image: url("IconPauseBlue.svg");
+  }
+}
+
+

@@ -1,0 +1,21 @@
+@import "../../variables";
+
+.PlayerControls {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 1em;
+}
+
+.PlayerControls__skip {
+  &:hover {
+    color: $highlight_color;
+    cursor: pointer;
+  }
+}
+
+.AdminControls {
+  .PlayerControls__skip {
+   margin-right: 1em;
+  }
+}

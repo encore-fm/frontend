@@ -1,6 +1,6 @@
 import React from "react";
-import IconPlus from "./IconPlus";
-import IconMinus from "./IconMinus";
+import IconPlus from "./icons/IconPlus";
+import IconMinus from "./icons/IconMinus";
 
 import './VoteButtons.scss';
 

@@ -1,7 +1,7 @@
 import React from "react";
 
 import './SearchResultsElement.scss'
-import IconPlus from "./IconPlus";
+import IconPlus from "./icons/IconPlus";
 
 const zeroPad = (num, places) => String(num).padStart(places, '0');
 
