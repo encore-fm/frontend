@@ -72,9 +72,11 @@
   border-top: 4px solid $text_color;
   flex-grow: 1;
 
+  transition: margin-top;
   transition-duration: 100ms;
   &.closed {
     margin-top: -3em;
+    visibility: hidden;
   }
 
   ul {
