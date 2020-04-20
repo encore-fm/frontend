@@ -7,12 +7,17 @@ import {API_BASE_URL} from "../services/backend/constants";
 import parsePlaylist from "../services/backend/helpers/parsePlaylist";
 
 import './PlayList.scss';
+import {synchronize} from "../actions/user";
 
 const PlayList = (props) => {
   const {user} = props;
 
   useEffect(() => {
       props.dispatch(fetchPlaylist(user));
+
+      // set the synchronized state
+      // if user is not spotify authorized, backend returns synchronized: false
+      props.dispatch(synchronize(user));
 
       // register sse event source
       const eventSource = new EventSource(`${API_BASE_URL}/events/${user.username}/${user.sessionID}`);
