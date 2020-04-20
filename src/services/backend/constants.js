@@ -1,5 +1,6 @@
 export const API_BASE_URL = process.env.REACT_APP_BACKEND_BASE_URL;
 
+
 // codes of errors received from backend
 export const SESSION_NOT_FOUND_ERROR = "SessionNotFoundError";
 export const USER_CONFLICT_ERROR = "UserConflictError";

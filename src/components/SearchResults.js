@@ -3,10 +3,20 @@ import SearchResultsElement from './SearchResultsElement';
 
 import './SearchResults.scss'
 
-const SearchResults = ({songs, handleSuggest}) => {
+const SearchResults = ({searchResults, songsAdded, handleSuggest, songsInPlaylist}) => {
+
   return (
     <div className="SearchResults">
-      {songs.map((song, i) => <SearchResultsElement song={song} key={i} handleSuggest={handleSuggest}/>)}
+      {
+        searchResults.map((song, i) =>
+          <SearchResultsElement
+            isAdded={songsAdded.includes(song.trackID)}
+            inPlaylist={songsInPlaylist.includes(song.trackID)}
+            song={song}
+            key={i}
+            handleSuggest={handleSuggest}
+          />
+        )}
     </div>
   )
 };

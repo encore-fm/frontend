@@ -12,17 +12,18 @@ import {useHistory} from "react-router-dom";
 const SongSearch = (props) => {
   const history = useHistory();
   const [query, setQuery] = useState('');
+  const [songsAdded, setSongsAdded] = useState([]);
+
+  const {clientToken, user, searchResults, error, playlist} = props;
 
   useEffect(() => {
-    const {clientToken, user} = props;
-
     if (!clientToken) {
       props.dispatch(fetchClientToken(user));
       return
     }
     if (query) props.dispatch(fetchSongs(query, clientToken));
     else props.dispatch(clearSongs());
-  }, [query, props.clientToken]);
+  }, [query, clientToken]);
 
   const handleClose = () => {
     history.push("/player");
@@ -33,13 +34,17 @@ const SongSearch = (props) => {
   };
 
   const handleSuggest = (songID) => {
-    props.dispatch(suggestSong(props.user, songID));
+    props.dispatch(suggestSong(user, songID)).then(() => {
+      if (!error.error) {
+        setSongsAdded([...songsAdded, songID])
+      }
+    });
   };
 
   return (
     <div className="SongSearch">
       <SearchTextField onChange={handleSearchFieldChange} value={query} onClose={handleClose}/>
-      <SearchResults songs={props.songs} handleSuggest={handleSuggest}/>
+      <SearchResults searchResults={searchResults} songsAdded={songsAdded} handleSuggest={handleSuggest} songsInPlaylist={playlist.map(song => song.trackID)}/>
     </div>
   )
 };
@@ -47,5 +52,7 @@ const SongSearch = (props) => {
 export default connect(state => ({
   user: state.user,
   clientToken: state.clientToken,
-  songs: state.songs,
+  searchResults: state.songs,
+  error: state.error,
+  playlist: state.playlist,
 }))(SongSearch);
