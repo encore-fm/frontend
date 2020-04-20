@@ -3,9 +3,7 @@ import JoinSession from "../services/backend/user/JoinSession";
 import FetchAuthToken from "../services/backend/fetching/FetchAuthToken";
 import createAsyncThunk from "./helpers/createAsyncThunk";
 import EncoreAuth from "../services/backend/EncoreAuth";
-import PlayerPlay from "../services/backend/player/PlayerPlay";
 import PlayerSynchronize from "../services/backend/user/PlayerSynchronize";
-import {PLAYER_PLAY_FAILURE, REQUEST_PLAYER_PLAY} from "./player";
 import PlayerDesynchronize from "../services/backend/user/PlayerDesynchronize";
 
 export const CREATE_SUCCESS = 'CREATE_SUCCESS';
@@ -18,6 +16,7 @@ export const FETCH_AUTH_TOKEN_FAILURE = 'FETCH_AUTH_TOKEN_FAILURE';
 export const AUTH_FAILURE = 'AUTH_FAILURE';
 
 export const REQUEST_SYNCHRONIZE = 'REQUEST_SYNCHRONIZE';
+export const SYNCHRONIZE_SUCCESS = 'SYNCHRONIZE_SUCCESS';
 export const SYNCHRONIZE_FAILURE = 'SYNCHRONIZE_FAILURE';
 
 export const REQUEST_DESYNCHRONIZE = 'REQUEST_DESYNCHRONIZE';
@@ -68,7 +67,7 @@ export const synchronize = user => {
   return createAsyncThunk(
     serviceInstance,
     () => requestSynchronize(),
-    null,
+    res => synchronizeSuccess(res.synchronized),
     res => synchronizeFailure(res.error)
   );
 };
@@ -78,7 +77,7 @@ export const desynchronize = user => {
   return createAsyncThunk(
     serviceInstance,
     () => requestDesynchronize(),
-    null,
+    res => synchronizeSuccess(res.synchronized),
     res => desynchronizeFailure(res.error)
   );
 };
@@ -134,6 +133,12 @@ const fetchAuthTokenFailure = error => ({
 const requestSynchronize = () => ({
   type: REQUEST_SYNCHRONIZE,
   payload: null,
+  error: null
+});
+
+const synchronizeSuccess = synchronized => ({
+  type: SYNCHRONIZE_SUCCESS,
+  payload: synchronized,
   error: null
 });
 
