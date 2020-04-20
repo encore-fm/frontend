@@ -56,6 +56,7 @@ const Player = (props) => {
         duration={current_song.duration_ms}
         progress={player.progress}
         timestamp={player.timestamp}
+        playing={player.is_playing}
         handleSeek={handleSeek}
       />
       <div className="Player__content">
