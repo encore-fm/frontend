@@ -2,8 +2,7 @@ import {
   CREATE_SUCCESS,
   FETCH_AUTH_TOKEN_SUCCESS,
   JOIN_SUCCESS,
-  REQUEST_DESYNCHRONIZE,
-  REQUEST_SYNCHRONIZE
+  SYNCHRONIZE_SUCCESS
 } from "../actions/user";
 
 // sets the user in the store
@@ -17,15 +16,10 @@ export default (state = null, action) => {
         ...state,
         authToken: action.payload
       };
-    case REQUEST_SYNCHRONIZE:
+    case SYNCHRONIZE_SUCCESS:
       return {
         ...state,
-        spotifySynchronized: true,
-      };
-    case REQUEST_DESYNCHRONIZE:
-      return {
-        ...state,
-        spotifySynchronized: false,
+        spotifySynchronized: action.payload,
       };
     default:
       return state;
