@@ -6,11 +6,6 @@
   position: sticky;
 
   margin: 0;
-  padding: 2em 1em;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 
   background-color: $background_color;
 
@@ -31,8 +26,9 @@
     margin: 0;
     padding: 0;
 
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
+    align-items: center;
   }
 
   li {
@@ -40,23 +36,75 @@
 
     a {
       color: $text_color;
-
-      &:hover {
-        color: $highlight_color;
-      }
     }
 
     &:hover {
-      color: $highlight_color;
+      //color: $highlight_color;
       cursor: pointer;
     }
   }
 }
 
 .Header__syncButton {
+  color: $highlight_color;
+
   &.disabled {
     text-decoration: line-through;
+    color: white;
   }
 }
 
+.Header__content {
+  width: calc(100% - 2em);
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2em 1em;
+  background-color: $background_color;
+  backface-visibility: hidden;
+  z-index: 5;
+}
+
+.Header__extraMenu {
+  z-index: 4;
+  margin: 0;
+  padding: 0;
+  border-top: 4px solid $text_color;
+  flex-grow: 1;
+
+  transition-duration: 100ms;
+  &.closed {
+    margin-top: -3em;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    li {
+      padding: 1em;
+
+      &:hover {
+        background-color: #333;
+        cursor: pointer;
+        transition-duration: 200ms;
+      }
+
+      &.not-implemented {
+        text-decoration: line-through;
+
+        &:hover {
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+
+
+}
 

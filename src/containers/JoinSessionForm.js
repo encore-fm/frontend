@@ -29,8 +29,6 @@ const JoinSessionForm = (props) => {
       if (isLogged || (stage === STAGES.NAME && sessionInfo && username)) {
         setStage(STAGES.AUTH);
       }
-    } else {
-      alert(error.error);
     }
   }, [user, error]);
 
