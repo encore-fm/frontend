@@ -2,6 +2,7 @@ import React from "react";
 
 import './PlayListElement.scss'
 import VoteButtons, {VOTE_STATE} from "./VoteButtons";
+import SongInfo from "./SongInfo";
 
 const PlayListElement = ({song, username, handleVote}) => {
   const {
@@ -27,19 +28,22 @@ const PlayListElement = ({song, username, handleVote}) => {
   const handleUpvote = () => handleVote(trackID, true);
   const handleDownvote = () => handleVote(trackID, false);
 
+  const infoStyle = {
+    marginLeft: '1em',
+    fontSize: '14px',
+    flexGrow: 1,
+  };
 
   return (
     <div className="PlayListElement">
       <img className="PlayListElement_image" src={coverUrl} alt={trackName}/>
-      <div className="PlayListElement_info">
-        <div className="PlayListElement_info_song">
-          {trackName}<br/>
-          {albumName}<br/>
-          {artists.join(',')}<br/>
-        </div>
-        <br/>
-        suggested by <span className="highlight">{suggestedBy}</span>
-      </div>
+      <SongInfo
+        style={infoStyle}
+        songName={trackName}
+        album={albumName}
+        artists={artists}
+        suggestedBy={suggestedBy}
+      />
       <div className="PlayListElement_voteButtons">
         <VoteButtons state={state} score={score} handleUpvote={handleUpvote} handleDownvote={handleDownvote}/>
       </div>
