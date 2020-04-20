@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 
 import "./SeekBar.scss"
 
-const SeekBar = ({modify, duration, progress, timestamp, handleSeek}) => {
+const SeekBar = ({modify, duration, progress, playing, timestamp, handleSeek}) => {
   const [lastUpdated, setLastUpdated] = useState(Date.now());
 
   const timeout = 50;
@@ -23,8 +23,13 @@ const SeekBar = ({modify, duration, progress, timestamp, handleSeek}) => {
   };
 
   const timeSinceUpdate = lastUpdated - Date.parse(timestamp);
+  let realProgress =
+    playing
+      ? progress + timeSinceUpdate
+      : progress;
+
   const styles = {
-    width: `${(progress + timeSinceUpdate)  / duration * 100}%`,
+    width: `${(realProgress) / duration * 100}%`,
     transition: 'width',
     transitionDuration: `${timeout}ms`,
     transitionTimingFunction: 'linear',
