@@ -11,7 +11,7 @@ const millisToString = (millis) => {
   return `${minutes}:${zeroPad(seconds % 60, 2)}`
 };
 
-const SearchResultsElement = ({song, handleSuggest}) => {
+const SearchResultsElement = ({song, handleSuggest, isAdded, inPlaylist}) => {
   const {
     trackName,
     trackID,
@@ -35,7 +35,7 @@ const SearchResultsElement = ({song, handleSuggest}) => {
         {millisToString(trackDuration)}
       </div>
       <div className="SearchResultsElement__addButton">
-        <IconPlus onClick={handleClick}/>
+        {!inPlaylist && <IconPlus onClick={handleClick} highlight={isAdded}/>}
       </div>
     </div>
   )

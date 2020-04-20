@@ -9,10 +9,9 @@ import parsePlaylist from "../services/backend/helpers/parsePlaylist";
 import './PlayList.scss';
 
 const PlayList = (props) => {
+  const {user} = props;
 
   useEffect(() => {
-      const {user} = props;
-
       props.dispatch(fetchPlaylist(user));
 
       // register sse event source
