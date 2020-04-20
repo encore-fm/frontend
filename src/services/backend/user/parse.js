@@ -8,5 +8,6 @@ export const parseUserData = (user, data) => {
     score: data.user_info.score,
     authUrl: data.auth_url,
     spotifyAuthorized: data.spotify_authorized,
+    spotifySynchronized: data.spotify_synchronized,
   }
 };

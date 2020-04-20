@@ -1,0 +1,25 @@
+@import "../../variables";
+
+.SeekBar {
+  position: relative;
+  width: 100vw;
+  height: 4px;
+
+  background-color: $text_color;
+
+  transition: height;
+  transition-duration: 200ms;
+
+  &:hover {
+    height: 8px;
+    cursor: pointer;
+  }
+
+  span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: $highlight_color;
+  }
+}

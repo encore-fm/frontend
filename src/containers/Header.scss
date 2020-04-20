@@ -37,6 +37,25 @@
 
   li {
     padding-left: 30px;
+
+    a {
+      color: $text_color;
+
+      &:hover {
+        color: $highlight_color;
+      }
+    }
+
+    &:hover {
+      color: $highlight_color;
+      cursor: pointer;
+    }
+  }
+}
+
+.Header__syncButton {
+  &.disabled {
+    text-decoration: line-through;
   }
 }
 

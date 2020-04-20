@@ -3,6 +3,10 @@ import JoinSession from "../services/backend/user/JoinSession";
 import FetchAuthToken from "../services/backend/fetching/FetchAuthToken";
 import createAsyncThunk from "./helpers/createAsyncThunk";
 import EncoreAuth from "../services/backend/EncoreAuth";
+import PlayerPlay from "../services/backend/player/PlayerPlay";
+import PlayerSynchronize from "../services/backend/user/PlayerSynchronize";
+import {PLAYER_PLAY_FAILURE, REQUEST_PLAYER_PLAY} from "./player";
+import PlayerDesynchronize from "../services/backend/user/PlayerDesynchronize";
 
 export const CREATE_SUCCESS = 'CREATE_SUCCESS';
 export const CREATE_FAILURE = 'CREATE_FAILURE';
@@ -12,6 +16,12 @@ export const REQUEST_AUTH_TOKEN = 'REQUEST_AUTH_TOKEN';
 export const FETCH_AUTH_TOKEN_SUCCESS = 'FETCH_AUTH_TOKEN_SUCCESS';
 export const FETCH_AUTH_TOKEN_FAILURE = 'FETCH_AUTH_TOKEN_FAILURE';
 export const AUTH_FAILURE = 'AUTH_FAILURE';
+
+export const REQUEST_SYNCHRONIZE = 'REQUEST_SYNCHRONIZE';
+export const SYNCHRONIZE_FAILURE = 'SYNCHRONIZE_FAILURE';
+
+export const REQUEST_DESYNCHRONIZE = 'REQUEST_DESYNCHRONIZE';
+export const DESYNCHRONIZE_FAILURE = 'DESYNCHRONIZE_FAILURE';
 
 export const createSession = adminName => {
   let serviceInstance = new CreateSession(adminName);
@@ -50,6 +60,26 @@ export const authenticate = user => {
     null,
     null,
     res => authFailure(res.error),
+  );
+};
+
+export const synchronize = user => {
+  let serviceInstance = new PlayerSynchronize(user);
+  return createAsyncThunk(
+    serviceInstance,
+    () => requestSynchronize(),
+    null,
+    res => synchronizeFailure(res.error)
+  );
+};
+
+export const desynchronize = user => {
+  let serviceInstance = new PlayerDesynchronize(user);
+  return createAsyncThunk(
+    serviceInstance,
+    () => requestDesynchronize(),
+    null,
+    res => desynchronizeFailure(res.error)
   );
 };
 
@@ -97,6 +127,30 @@ const fetchAuthTokenSuccess = user => ({
 
 const fetchAuthTokenFailure = error => ({
   type: FETCH_AUTH_TOKEN_FAILURE,
+  payload: null,
+  error: error
+});
+
+const requestSynchronize = () => ({
+  type: REQUEST_SYNCHRONIZE,
+  payload: null,
+  error: null
+});
+
+const synchronizeFailure = error => ({
+  type: SYNCHRONIZE_FAILURE,
+  payload: null,
+  error: error
+});
+
+const requestDesynchronize = () => ({
+  type: REQUEST_DESYNCHRONIZE,
+  payload: null,
+  error: null
+});
+
+const desynchronizeFailure = error => ({
+  type: DESYNCHRONIZE_FAILURE,
   payload: null,
   error: error
 });

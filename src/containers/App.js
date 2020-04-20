@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
-import Header from '../components/Header';
+import Header from './Header';
 
 import WelcomeView from '../views/WelcomeView';
 import CreateSessionView from '../views/CreateSessionView';

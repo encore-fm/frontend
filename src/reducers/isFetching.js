@@ -1,6 +1,6 @@
 import {REQUEST_PLAYLIST} from "../actions/playlist";
 import {REQUEST_SONGS} from "../actions/songs";
-import {REQUEST_AUTH_TOKEN} from "../actions/user";
+import {REQUEST_AUTH_TOKEN, REQUEST_DESYNCHRONIZE, REQUEST_SYNCHRONIZE} from "../actions/user";
 import {REQUEST_CLIENT_TOKEN} from "../actions/clientToken";
 import {REQUEST_SUGGEST_SONG} from "../actions/suggestSong";
 import {REQUEST_VOTE_SONG} from "../actions/voteSong";
@@ -25,6 +25,8 @@ export default (state = false, action) => {
     case REQUEST_PLAYER_SKIP:
     case REQUEST_PLAYER_SEEK:
     case REQUEST_PLAYER_STATE:
+    case REQUEST_SYNCHRONIZE:
+    case REQUEST_DESYNCHRONIZE:
       return true;
     default:
       return false;
