@@ -7,6 +7,7 @@ import "./Player.scss";
 import AdminPlayerControls from "../components/PlayerControls/AdminPlayerControls";
 import UserPlayerControls from "../components/PlayerControls/UserPlayerControls";
 import SeekBar from "../components/PlayerControls/SeekBar";
+import SongInfo from "../components/SongInfo";
 
 const Player = (props) => {
   const {user, player} = props;
@@ -45,6 +46,14 @@ const Player = (props) => {
     props.dispatch(seek(user, Math.floor(position)));
   };
 
+  const infoStyle = {
+    padding: '0.5em 1em',
+    fontSize: '12px',
+    alignSelf: 'baseline',
+    flexGrow: 1,
+  };
+
+
   if (!player || !player.current_song) return "";
 
   const {current_song} = player;
@@ -61,13 +70,13 @@ const Player = (props) => {
       />
       <div className="Player__content">
         <img src={current_song.cover_url} alt={current_song.name}/>
-        <div className="Player__songInfo">
-          {current_song.name}<br />
-          {current_song.album_name}<br/>
-          {current_song.artists.join(', ')}<br/>
-          <br />
-          suggested by <span className="highlight">{current_song.suggested_by}</span>
-        </div>
+        <SongInfo
+          style={infoStyle}
+          songName={current_song.name}
+          album={current_song.album_name}
+          artists={current_song.artists}
+          suggestedBy={current_song.suggested_by}
+        />
         {user.isAdmin ?
           <AdminPlayerControls
             isPlaying={player.is_playing}

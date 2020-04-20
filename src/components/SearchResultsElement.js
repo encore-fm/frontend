@@ -2,6 +2,7 @@ import React from "react";
 
 import './SearchResultsElement.scss'
 import IconPlus from "./icons/IconPlus";
+import SongInfo from "./SongInfo";
 
 const zeroPad = (num, places) => String(num).padStart(places, '0');
 
@@ -25,15 +26,23 @@ const SearchResultsElement = ({song, handleSuggest, isAdded, inPlaylist}) => {
     handleSuggest(trackID);
   };
 
+  const infoStyle = {
+    padding: '0.5em 1em',
+    fontSize: '12px',
+    alignSelf: 'baseline',
+    flexGrow: 1,
+  };
+
   return (
     <div className="SearchResultsElement">
       <img src={coverUrl} alt={trackName} />
-      <div className="SearchResultsElement__songInfo">
-        {trackName}<br />
-        {albumName}<br />
-        {artists.slice(0, 3).join(', ')}<br /><br />
-        {millisToString(trackDuration)}
-      </div>
+      <SongInfo
+        style={infoStyle}
+        songName={trackName}
+        album={albumName}
+        artists={artists}
+        duration={millisToString(trackDuration)}
+      />
       <div className="SearchResultsElement__addButton">
         {!inPlaylist && <IconPlus onClick={handleClick} highlight={isAdded}/>}
       </div>
