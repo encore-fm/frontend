@@ -6,6 +6,7 @@ import EncoreAuth from "../services/backend/EncoreAuth";
 import PlayerSynchronize from "../services/backend/user/PlayerSynchronize";
 import PlayerDesynchronize from "../services/backend/user/PlayerDesynchronize";
 import LeaveSession from "../services/backend/user/LeaveSession";
+import DeleteSession from "../services/backend/user/DeleteSession";
 
 export const CREATE_SUCCESS = 'CREATE_SUCCESS';
 export const CREATE_FAILURE = 'CREATE_FAILURE';
@@ -52,17 +53,17 @@ export const leaveSession = user => {
   return createAsyncThunk(
     serviceInstance,
     null,
-    res => leaveSuccess(res.user),
+    _ => leaveSuccess(),
     res => leaveFailure(res.error)
   );
 };
 
 export const deleteSession = user => {
-  const serviceInstance = new LeaveSession(user);
+  const serviceInstance = new DeleteSession(user);
   return createAsyncThunk(
     serviceInstance,
     null,
-    res => deleteSessionSuccess(res.user),
+    _ => deleteSessionSuccess(),
     res => deleteSessionFailure(res.error)
   );
 };

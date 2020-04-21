@@ -12,7 +12,13 @@ class LeaveSession {
   // joins a session and returns the user object
   perform() {
     const leaveRequest = new Request(`${API_BASE_URL}/users/${this.user.username}/leave`,
-      {method: 'DELETE'});
+      {
+        method: 'DELETE',
+        headers: {
+          "Authorization": this._user.secret,
+          "Session": this._user.sessionID
+        }
+      });
 
     return fetchWithoutData(leaveRequest, this);
   }

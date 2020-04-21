@@ -12,7 +12,13 @@ class DeleteSession {
   // joins a session and returns the user object
   perform() {
     const deleteSessionRequest = new Request(`${API_BASE_URL}/admin/${this.user.username}/deleteSession`,
-      {method: 'DELETE'});
+      {
+        method: 'DELETE',
+        headers: {
+          "Authorization": this.user.secret,
+          "Session": this.user.sessionID
+        }
+      });
 
     return fetchWithoutData(deleteSessionRequest, this);
   }
