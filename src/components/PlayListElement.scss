@@ -17,6 +17,10 @@
 .PlayListElement_voteButtons {
 }
 
+.PlayListElement--NoBorder {
+  border-bottom: 0;
+}
+
 .highlight {
   color: $highlight_color;
 }

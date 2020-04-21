@@ -4,7 +4,7 @@ import './PlayListElement.scss'
 import VoteButtons, {VOTE_STATE} from "./VoteButtons";
 import SongInfo from "./SongInfo";
 
-const PlayListElement = ({song, username, handleVote}) => {
+const PlayListElement = ({song, username, handleVote, borderBottom=true}) => {
   const {
     trackName,
     trackID,
@@ -35,7 +35,7 @@ const PlayListElement = ({song, username, handleVote}) => {
   };
 
   return (
-    <div className="PlayListElement">
+    <div className={`PlayListElement ${!borderBottom ? "PlayListElement--NoBorder" : ""}`}>
       <img className="PlayListElement_image" src={coverUrl} alt={trackName}/>
       <SongInfo
         style={infoStyle}
