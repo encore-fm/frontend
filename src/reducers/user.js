@@ -1,7 +1,7 @@
 import {
-  CREATE_SUCCESS,
+  CREATE_SUCCESS, DELETE_SESSION_SUCCESS,
   FETCH_AUTH_TOKEN_SUCCESS,
-  JOIN_SUCCESS,
+  JOIN_SUCCESS, LEAVE_SUCCESS,
   SYNCHRONIZE_SUCCESS
 } from "../actions/user";
 
@@ -21,6 +21,9 @@ export default (state = null, action) => {
         ...state,
         spotifySynchronized: action.payload,
       };
+    case LEAVE_SUCCESS:
+    case DELETE_SESSION_SUCCESS:
+      return null;
     default:
       return state;
   }

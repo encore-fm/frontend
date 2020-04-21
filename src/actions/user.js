@@ -5,11 +5,16 @@ import createAsyncThunk from "./helpers/createAsyncThunk";
 import EncoreAuth from "../services/backend/EncoreAuth";
 import PlayerSynchronize from "../services/backend/user/PlayerSynchronize";
 import PlayerDesynchronize from "../services/backend/user/PlayerDesynchronize";
+import LeaveSession from "../services/backend/user/LeaveSession";
 
 export const CREATE_SUCCESS = 'CREATE_SUCCESS';
 export const CREATE_FAILURE = 'CREATE_FAILURE';
 export const JOIN_SUCCESS = 'JOIN_SUCCESS';
 export const JOIN_FAILURE = 'JOIN_FAILURE';
+export const LEAVE_SUCCESS = 'LEAVE_SUCCESS';
+export const LEAVE_FAILURE = 'LEAVE_FAILURE';
+export const DELETE_SESSION_SUCCESS = 'DELETE_SESSION_SUCCESS';
+export const DELETE_SESSION_FAILURE = 'DELETE_SESSION_FAILURE';
 export const REQUEST_AUTH_TOKEN = 'REQUEST_AUTH_TOKEN';
 export const FETCH_AUTH_TOKEN_SUCCESS = 'FETCH_AUTH_TOKEN_SUCCESS';
 export const FETCH_AUTH_TOKEN_FAILURE = 'FETCH_AUTH_TOKEN_FAILURE';
@@ -39,6 +44,26 @@ export const joinSession = (username, sessionID) => {
     null,
     res => joinSuccess(res.user),
     res => joinFailure(res.error)
+  );
+};
+
+export const leaveSession = user => {
+  const serviceInstance = new LeaveSession(user);
+  return createAsyncThunk(
+    serviceInstance,
+    null,
+    res => leaveSuccess(res.user),
+    res => leaveFailure(res.error)
+  );
+};
+
+export const deleteSession = user => {
+  const serviceInstance = new LeaveSession(user);
+  return createAsyncThunk(
+    serviceInstance,
+    null,
+    res => deleteSessionSuccess(res.user),
+    res => deleteSessionFailure(res.error)
   );
 };
 
@@ -108,6 +133,30 @@ const joinSuccess = user => ({
 
 const joinFailure = error => ({
   type: JOIN_FAILURE,
+  payload: null,
+  error: error
+});
+
+const leaveSuccess = () => ({
+  type: LEAVE_SUCCESS,
+  payload: null,
+  error: null
+});
+
+const leaveFailure = error => ({
+  type: LEAVE_FAILURE,
+  payload: null,
+  error: error
+});
+
+const deleteSessionSuccess = () => ({
+  type: DELETE_SESSION_SUCCESS,
+  payload: null,
+  error: null
+});
+
+const deleteSessionFailure = error => ({
+  type: DELETE_SESSION_FAILURE,
   payload: null,
   error: error
 });
