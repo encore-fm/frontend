@@ -13,6 +13,10 @@ const Player = (props) => {
   const {user, player} = props;
 
   useEffect(() => {
+      // happens if /add is requested, but user is null.
+      // MainView pushes / to the history, but the Player still renders.
+      if (!user) return;
+
       props.dispatch(initPlayerState(user));
       // register sse event source
       const eventSource = new EventSource(`${API_BASE_URL}/events/${user.username}/${user.sessionID}`);

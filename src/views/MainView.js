@@ -15,10 +15,12 @@ const MainView = (props) => {
   if (!user) history.push("/");
 
   // authenticate user
-  props.dispatch(authenticate(user))
-    .then(_ => {
-      if (!props.isLogged) history.push("/");
-    });
+  if (user) {
+    props.dispatch(authenticate(user))
+      .then(_ => {
+        if (!props.isLogged) history.push("/");
+      });
+  }
 
   const path = window.location.pathname;
 
