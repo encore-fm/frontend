@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import './Header.scss';
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {connect} from "react-redux";
-import {desynchronize, synchronize} from "../actions/user";
+import {deleteSession, desynchronize, leaveSession, synchronize} from "../actions/user";
 import IconMenu from "../components/icons/IconMenu";
 import IconClose from "../components/icons/IconClose";
 
 const Header = (props) => {
-
+  const history = useHistory();
   const [menuOpen, setMenuOpen] = useState(false);
   const {isLogged, user} = props;
 
@@ -32,8 +32,20 @@ const Header = (props) => {
     }
   };
 
-  const leaveSession = () => {
-    if (window.confirm('sure?')) localStorage.clear();
+  const adminDeleteSession = () => {
+    if (!window.confirm('are you sure?\nthis session will be deleted')) return;
+
+    props.dispatch(deleteSession(user));
+    localStorage.clear();
+    history.push('/');
+  };
+
+  const userLeaveSession = () => {
+    if (!window.confirm('are you sure? your score will be deleted')) return;
+
+    props.dispatch(leaveSession(user));
+    localStorage.clear();
+    history.push('/');
   };
 
   return (
@@ -63,8 +75,10 @@ const Header = (props) => {
         <menu className={`Header__extraMenu ${!menuOpen ? 'closed' : ''}`}>
           <ul>
             <li onClick={copyInviteLink}>copy invite link</li>
-            <li onClick={leaveSession}>leave session</li>
-            <li className="not-implemented">help</li>
+            {user.isAdmin
+              ? <li onClick={adminDeleteSession}>delete session</li>
+              : <li onClick={userLeaveSession}>leave session</li>
+            }
           </ul>
         </menu>
       )}
