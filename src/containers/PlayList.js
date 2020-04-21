@@ -9,7 +9,7 @@ import parsePlaylist from "../services/backend/helpers/parsePlaylist";
 import './PlayList.scss';
 
 const PlayList = (props) => {
-  const {user} = props;
+  const {user, playlist} = props;
 
   useEffect(() => {
       props.dispatch(fetchPlaylist(user));
@@ -38,17 +38,18 @@ const PlayList = (props) => {
 
   const handleVote = (songID, isUpvote) => {
     const voteAction = isUpvote ? 'up' : 'down';
-    props.dispatch(voteSong(props.user, songID, voteAction));
+    props.dispatch(voteSong(user, songID, voteAction));
   };
 
   return (
     <div className="PlayList">
-      {props.playlist.map((song, i) => (
+      {playlist.map((song, i) => (
         <PlayListElement
           key={i}
           song={song}
-          username={props.user.username}
+          username={user.username}
           handleVote={handleVote}
+          borderBottom={i !== playlist.length - 1}
         />
       ))}
     </div>
