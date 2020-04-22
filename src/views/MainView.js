@@ -1,34 +1,24 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {useHistory} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 
 import PlayList from '../containers/PlayList';
 import SongSearch from '../containers/SongSearch';
 import {authenticate} from "../actions/user";
 import Player from "../containers/Player";
+import isLogged from "../reducers/isLogged";
 
 const MainView = (props) => {
-  const history = useHistory();
-  const {user} = props;
-
-  // redirect user to welcome view if not logged in
-  if (!user) history.push("/");
-
-  // authenticate user
-  if (user) {
-    props.dispatch(authenticate(user))
-      .then(_ => {
-        if (!props.isLogged) history.push("/");
-      });
-  }
-
+  const {isLogged, user} = props;
+  if (user) props.dispatch(authenticate(user));
   const path = window.location.pathname;
 
   return (
     <div className="MainView">
-      {path === '/player' && <PlayList/>}
-      {path === '/add' && <SongSearch/>}
-      <Player />
+      {!isLogged && <Redirect to="/"/>}
+      {isLogged && path === '/player' && <PlayList/>}
+      {isLogged && path === '/add' && <SongSearch/>}
+      {isLogged && <Player />}
     </div>
   )
 };
