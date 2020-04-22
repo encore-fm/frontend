@@ -9,16 +9,16 @@ import Player from "../containers/Player";
 import isLogged from "../reducers/isLogged";
 
 const MainView = (props) => {
-  const {user} = props;
+  const {isLogged, user} = props;
   if (user) props.dispatch(authenticate(user));
   const path = window.location.pathname;
 
   return (
     <div className="MainView">
-      {path === '/player' && <PlayList/>}
-      {path === '/add' && <SongSearch/>}
-      <Player />
       {!isLogged && <Redirect to="/"/>}
+      {isLogged && path === '/player' && <PlayList/>}
+      {isLogged && path === '/add' && <SongSearch/>}
+      {isLogged && <Player />}
     </div>
   )
 };
