@@ -2,20 +2,12 @@ import React from 'react';
 import ContentWrapper from '../components/ContentWrapper';
 import CreateSessionForm from "../containers/CreateSessionForm";
 import {connect} from "react-redux";
-import {useHistory} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import {authenticate} from "../actions/user";
 
 const CreateSessionView = (props) => {
   const {user, isLogged} = props;
-  const history = useHistory();
-
-  // redirect user to player view if already logged in
-  if (user) {
-    props.dispatch(authenticate(user))
-      .then(_ => {
-        if (isLogged && user && user.spotifyAuthorized) history.push("/player");
-      });
-  }
+  if (user) props.dispatch(authenticate(user));
 
   return (
     <ContentWrapper>
@@ -24,6 +16,7 @@ const CreateSessionView = (props) => {
       <br />
 
       <CreateSessionForm/>
+      {isLogged && user.spotifyAuthorized && <Redirect to="/player"/>}
     </ContentWrapper>
   )
 };
