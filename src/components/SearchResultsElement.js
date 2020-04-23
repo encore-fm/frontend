@@ -44,7 +44,7 @@ const SearchResultsElement = ({song, handleSuggest, isAdded, inPlaylist}) => {
         duration={millisToString(trackDuration)}
       />
       <div className="SearchResultsElement__addButton">
-        {!inPlaylist && <IconPlus onClick={handleClick} highlight={isAdded}/>}
+        {(!inPlaylist || isAdded) && <IconPlus onClick={handleClick} highlight={isAdded}/>}
       </div>
     </div>
   )
