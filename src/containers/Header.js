@@ -37,6 +37,7 @@ const Header = (props) => {
 
     props.dispatch(deleteSession(user));
     localStorage.clear();
+    history.push('/');
   };
 
   const userLeaveSession = () => {
@@ -44,6 +45,7 @@ const Header = (props) => {
 
     props.dispatch(leaveSession(user));
     localStorage.clear();
+    history.push('/');
   };
 
   return (
@@ -80,7 +82,6 @@ const Header = (props) => {
           </ul>
         </menu>
       )}
-      {!isLogged && <Redirect to="/"/>}
     </header>
   )
 };
