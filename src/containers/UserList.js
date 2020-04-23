@@ -3,6 +3,8 @@ import {connect} from "react-redux";
 import {fetchUserList} from "../actions/userList";
 import UserListElement from "../components/UserListElement";
 
+import './UserList.scss';
+
 const UserList = (props) => {
   const {user, userList, error} = props;
 
@@ -12,7 +14,15 @@ const UserList = (props) => {
 
   return (
     <div className="UserList">
-      {userList && userList.map((el, i) => <UserListElement user={el} key={i} /> )}
+      <div className="UserList__col">
+        <h3>listening</h3>
+        {userList && userList.filter(u => u.isSynchronized === true).map((el, i) => <UserListElement user={el} key={i} /> )}
+      </div>
+
+      <div className="UserList__col">
+        <h3>not listening</h3>
+        {userList && userList.filter(u => u.isSynchronized === false).map((el, i) => <UserListElement user={el} key={i} /> )}
+      </div>
     </div>
   )
 
