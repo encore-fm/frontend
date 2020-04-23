@@ -10,7 +10,7 @@ class FetchUserList {
   }
 
   perform() {
-    let listUsersRequest = new Request(`${API_BASE_URL}/users/${this._user.username}/listSongs`,
+    let listUsersRequest = new Request(`${API_BASE_URL}/users/${this._user.username}/list`,
       {
         headers: {
           "Authorization": this._user.secret,
