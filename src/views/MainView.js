@@ -46,9 +46,19 @@ const MainView = (props) => {
     const path = window.location.pathname;
     switch (path) {
       case '/player':
-        return <PlayList/>;
+        return (
+          <React.Fragment>
+            <PlayList />
+            <Player />
+          </React.Fragment>
+      );
       case '/add':
-        return <SongSearch/>
+        return (
+          <React.Fragment>
+            <SongSearch />
+            <Player />
+          </React.Fragment>
+        );
     }
   };
   const redirect = <Redirect to="/"/>;
@@ -56,7 +66,6 @@ const MainView = (props) => {
   return (
     <div className="MainView">
       {isLogged ? renderIsLogged() : redirect}
-      {isLogged && <Player />}
     </div>
   )
 };
