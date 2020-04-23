@@ -34,11 +34,8 @@ const SongSearch = (props) => {
   };
 
   const handleSuggest = (songID) => {
-    props.dispatch(suggestSong(user, songID)).then(() => {
-      if (!error.error) {
-        setSongsAdded([...songsAdded, songID])
-      }
-    });
+    props.dispatch(suggestSong(user, songID));
+    setSongsAdded([...songsAdded, songID]);
   };
 
   return (
