@@ -10,6 +10,7 @@ import JoinSessionView from "../views/JoinSessionView";
 
 import './App.scss'
 import 'normalize.css'
+import UserList from "./UserList";
 
 
 class App extends Component {
@@ -25,7 +26,7 @@ class App extends Component {
             <Route path="/create" component={CreateSessionView}/>
             <Route path="/player" component={MainView}/>
             <Route path="/add" component={MainView}/>
-            <Route path="/profile" component={null}/>
+            <Route path="/profile" component={UserList}/>
           </Switch>
         </div>
       </Router>
