@@ -15,7 +15,7 @@ const JoinSessionView = (props) => {
     <ContentWrapper>
       {!sessionID && <EnterSessionIDForm />}
       {sessionID && <JoinSessionForm/>}
-      {isLogged && <Redirect to="/player"/>}
+      {isLogged && user.spotifyAuthorized && <Redirect to="/player"/>}
     </ContentWrapper>
   )
 };
