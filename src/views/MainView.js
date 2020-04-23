@@ -13,12 +13,14 @@ import {API_BASE_URL} from "../services/backend/constants";
 
 const MainView = (props) => {
   const {isLogged, user} = props;
-  let eventSource = null;
-  if (user) {
-    // authenticate user
-    props.dispatch(authenticate(user));
+  // authenticate user
+  if (user) props.dispatch(authenticate(user));
+
+  // close event source when component unmounts
+  useEffect(() => {
+    if (!user) return;
     // register sse event source
-    eventSource = new EventSource(`${API_BASE_URL}/events/${user.username}/${user.sessionID}`);
+    const eventSource = new EventSource(`${API_BASE_URL}/events/${user.username}/${user.sessionID}`);
     // listen for incoming playlist change events and set the state playlist accordingly
     eventSource.addEventListener(
       'sse:playlist_change',
@@ -29,18 +31,14 @@ const MainView = (props) => {
       'sse:player_state_change',
       e => handlePlayerStateChange(JSON.parse(e.data))
     );
-  }
+    return () => eventSource.close()
+  }, [user]);
 
   const handlePlaylistChange = data => {
     const newPlaylist = parsePlaylist(data);
     props.dispatch(setPlaylist(newPlaylist));
   };
   const handlePlayerStateChange = data => props.dispatch(setPlayerState(data));
-
-  // close event source when component unmounts
-  useEffect(() => {
-    if (eventSource) return eventSource.close()
-  }, []);
 
   const renderIsLogged = () => {
     const path = window.location.pathname;
