@@ -34,7 +34,7 @@ const MainView = (props) => {
     );
 
     return () => eventSource.close()
-  });
+  }, []);
 
   const handlePlaylistChange = data => {
     const newPlaylist = parsePlaylist(data);
