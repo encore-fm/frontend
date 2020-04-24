@@ -1,5 +1,6 @@
 import {API_BASE_URL, STATUS_SUCCESS} from "../constants";
 import fetchWithData from "../../helpers/fetchWithData";
+import parseUserList from "../../helpers/parseUserList";
 
 class FetchUserList {
   constructor(user) {
@@ -22,12 +23,7 @@ class FetchUserList {
   }
 
   parse = (data) => {
-    this._userList = data.map(user => ({
-      username: user.username,
-      isAdmin: user.is_admin,
-      score: user.score,
-      isSynchronized: user.spotify_synchronized,
-    }))
+    this._userList = parseUserList(data);
   };
 
   get status() {
