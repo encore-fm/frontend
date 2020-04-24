@@ -1,16 +1,18 @@
+// service instance used to fetch a user's top Spotify tracks
 import {API_BASE_URL, STATUS_SUCCESS} from "../constants";
 import fetchWithData from "../../helpers/fetchWithData";
+import parseSpotifyTracks from "../../helpers/parseSpotifyTracks";
 
-class FetchClientToken {
+class FetchFavouriteSongs {
   constructor(user) {
     this._status = STATUS_SUCCESS;
     this._user = user;
-    this._clientToken = null;
+    this._results = [];
     this._error = null;
   }
 
   perform() {
-    let clientTokenRequest = new Request(`${API_BASE_URL}/users/${this._user.username}/clientToken`,
+    let favouriteSongsRequest = new Request(`${API_BASE_URL}/users/${this._user.username}/favouriteSongs`,
       {
         headers: {
           "Authorization": this._user.secret,
@@ -18,8 +20,12 @@ class FetchClientToken {
         }
       });
 
-    return fetchWithData(clientTokenRequest, this,
-      data => this._clientToken = data.access_token);
+    return fetchWithData(favouriteSongsRequest, this,
+      data => this._results = parseSpotifyTracks(this.results, data));
+  }
+
+  get results() {
+    return this._results;
   }
 
   get status() {
@@ -28,10 +34,6 @@ class FetchClientToken {
 
   set status(value) {
     this._status = value;
-  }
-
-  get clientToken() {
-    return this._clientToken;
   }
 
   get error() {
@@ -43,4 +45,4 @@ class FetchClientToken {
   }
 }
 
-export default FetchClientToken;
+export default FetchFavouriteSongs;

@@ -1,5 +1,5 @@
 import {API_BASE_URL, STATUS_SUCCESS} from "../constants";
-import fetchWithData from "../helpers/fetchWithData";
+import fetchWithData from "../../helpers/fetchWithData";
 
 class FetchUserList {
   constructor(user) {

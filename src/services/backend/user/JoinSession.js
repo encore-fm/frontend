@@ -1,6 +1,6 @@
 import {API_BASE_URL, STATUS_SUCCESS} from "../constants";
-import fetchWithData from "../helpers/fetchWithData";
-import {parseInitialUserData} from "../helpers/parseUser";
+import fetchWithData from "../../helpers/fetchWithData";
+import {parseInitialUserData} from "../../helpers/parseUser";
 
 class JoinSession {
   constructor(username, sessionID) {

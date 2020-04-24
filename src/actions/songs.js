@@ -1,6 +1,7 @@
 import FetchSongs from "../services/spotify/FetchSongs";
 import createAsyncThunk from "./helpers/createAsyncThunk";
 import {clearClientToken} from "./clientToken";
+import FetchFavouriteSongs from "../services/backend/fetching/FetchFavouriteSongs";
 
 export const SET_SONGS = 'SET_SONGS';
 export const FETCH_SONGS_FAILURE = 'FETCH_SONGS_FAILURE';
@@ -13,6 +14,16 @@ export const fetchSongs = (query, token) => {
     res => setSongs(res.results),
     res => fetchSongsFailure(res.error),
     _ => clearClientToken()
+  );
+};
+
+export const fetchFavouriteSongs = user => {
+  let serviceInstance = new FetchFavouriteSongs(user);
+  return createAsyncThunk(
+    serviceInstance,
+    true,
+    res => setSongs(res.results),
+    res => fetchSongsFailure(res.error)
   );
 };
 

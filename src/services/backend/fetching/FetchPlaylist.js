@@ -1,6 +1,6 @@
 import {API_BASE_URL, STATUS_SUCCESS} from "../constants";
-import fetchWithData from "../helpers/fetchWithData";
-import parsePlaylist from "../helpers/parsePlaylist";
+import fetchWithData from "../../helpers/fetchWithData";
+import parsePlaylist from "../../helpers/parsePlaylist";
 
 class FetchPlaylist {
   constructor(user) {

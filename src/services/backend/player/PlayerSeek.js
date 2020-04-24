@@ -1,5 +1,5 @@
 import {API_BASE_URL, STATUS_SUCCESS} from "../constants";
-import fetchWithoutData from "../helpers/fetchWithoutData";
+import fetchWithoutData from "../../helpers/fetchWithoutData";
 
 class PlayerSeek {
   constructor(user, positionMs) {

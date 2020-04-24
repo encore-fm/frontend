@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
 import SearchTextField from "../components/SearchTextField";
-import {clearSongs, fetchSongs} from "../actions/songs";
+import {clearSongs, fetchFavouriteSongs, fetchSongs} from "../actions/songs";
 import SearchResults from "../components/SearchResults";
 import {fetchClientToken} from "../actions/clientToken";
 
@@ -22,7 +22,8 @@ const SongSearch = (props) => {
       return
     }
     if (query) props.dispatch(fetchSongs(query, clientToken));
-    else props.dispatch(clearSongs());
+    else
+      if (user.spotifyAuthorized) props.dispatch(fetchFavouriteSongs(user));
   }, [query, clientToken]);
 
   const handleClose = () => {
