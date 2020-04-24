@@ -75,7 +75,7 @@
   transition: margin-top;
   transition-duration: 100ms;
   &.closed {
-    margin-top: -3em;
+    margin-top: calc(-3em - 4px);
     visibility: hidden;
   }
 
