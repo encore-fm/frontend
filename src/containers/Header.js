@@ -20,8 +20,9 @@ const Header = (props) => {
     } else {
       // ask user to authorize
       if (!window.confirm('You need to connect to Spotify to synchronize.\nConnect to Spotify?')) return;
+
       // redirect user to Spotify
-      window.location.href = user.authUrl;
+      window.open(user.authUrl, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
     }
   };
 
