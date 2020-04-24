@@ -1,7 +1,7 @@
 // service instance used to fetch a user's top Spotify tracks
 import {API_BASE_URL, STATUS_SUCCESS} from "../constants";
 import fetchWithData from "../../helpers/fetchWithData";
-import {parseFavouriteSongs} from "../../helpers/parseSpotifyTracks";
+import parseSpotifyTracks from "../../helpers/parseSpotifyTracks";
 
 class FetchFavouriteSongs {
   constructor(user) {
@@ -21,7 +21,7 @@ class FetchFavouriteSongs {
       });
 
     return fetchWithData(favouriteSongsRequest, this,
-      data => this._results = parseFavouriteSongs(this.results, data));
+      data => this._results = parseSpotifyTracks(this.results, data));
   }
 
   get results() {

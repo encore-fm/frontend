@@ -1,6 +1,6 @@
 import {STATUS_SUCCESS} from "../backend/constants";
 import fetchWithData from "../helpers/fetchWithData";
-import {parseSpotifyTracks} from "../helpers/parseSpotifyTracks";
+import parseSpotifyTracks from "../helpers/parseSpotifyTracks";
 
 class FetchSongs {
   constructor(query, token) {
@@ -21,7 +21,7 @@ class FetchSongs {
   }
 
   parseData = data => {
-    this._results = parseSpotifyTracks(this.results, data);
+    this._results = parseSpotifyTracks(this.results, data.tracks.items); // song data is in data.tracks.items
   };
 
   get status() {
