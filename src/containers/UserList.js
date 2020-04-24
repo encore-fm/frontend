@@ -8,11 +8,11 @@ import './UserList.scss';
 const UserList = (props) => {
   const {user, userList, error} = props;
 
-  const {spotifySyncronized} = user;
+  const {spotifySynchronized} = user;
 
   useEffect(() => {
     props.dispatch(fetchUserList(user))
-  }, [spotifySyncronized]);
+  }, [spotifySynchronized]);
 
   return (
     <div className="UserList">
