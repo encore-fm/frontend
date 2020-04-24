@@ -7,32 +7,32 @@ import PlayerSynchronize from "../services/backend/user/PlayerSynchronize";
 import PlayerDesynchronize from "../services/backend/user/PlayerDesynchronize";
 import LeaveSession from "../services/backend/user/LeaveSession";
 import DeleteSession from "../services/backend/user/DeleteSession";
+import FetchUserInfo from "../services/backend/fetching/FetchUserInfo";
 
 export const CREATE_SUCCESS = 'CREATE_SUCCESS';
 export const CREATE_FAILURE = 'CREATE_FAILURE';
 export const JOIN_SUCCESS = 'JOIN_SUCCESS';
 export const JOIN_FAILURE = 'JOIN_FAILURE';
+export const SET_USER = 'SET_USER';
+export const FETCH_USER_INFO_FAILURE = 'FETCH_USER_FAILURE';
 export const LEAVE_SUCCESS = 'LEAVE_SUCCESS';
 export const LEAVE_FAILURE = 'LEAVE_FAILURE';
 export const DELETE_SESSION_SUCCESS = 'DELETE_SESSION_SUCCESS';
 export const DELETE_SESSION_FAILURE = 'DELETE_SESSION_FAILURE';
-export const REQUEST_AUTH_TOKEN = 'REQUEST_AUTH_TOKEN';
 export const FETCH_AUTH_TOKEN_SUCCESS = 'FETCH_AUTH_TOKEN_SUCCESS';
 export const FETCH_AUTH_TOKEN_FAILURE = 'FETCH_AUTH_TOKEN_FAILURE';
 export const AUTH_FAILURE = 'AUTH_FAILURE';
 
-export const REQUEST_SYNCHRONIZE = 'REQUEST_SYNCHRONIZE';
 export const SYNCHRONIZE_SUCCESS = 'SYNCHRONIZE_SUCCESS';
 export const SYNCHRONIZE_FAILURE = 'SYNCHRONIZE_FAILURE';
 
-export const REQUEST_DESYNCHRONIZE = 'REQUEST_DESYNCHRONIZE';
 export const DESYNCHRONIZE_FAILURE = 'DESYNCHRONIZE_FAILURE';
 
 export const createSession = adminName => {
   let serviceInstance = new CreateSession(adminName);
   return createAsyncThunk(
     serviceInstance,
-    null,
+    false,
     res => createSuccess(res.user),
     res => createFailure(res.error)
   );
@@ -42,17 +42,27 @@ export const joinSession = (username, sessionID) => {
   let serviceInstance = new JoinSession(username, sessionID);
   return createAsyncThunk(
     serviceInstance,
-    null,
+    false,
     res => joinSuccess(res.user),
     res => joinFailure(res.error)
   );
+};
+
+export const fetchUserInfo = (user) => {
+  let serviceInstance = new FetchUserInfo(user);
+  return createAsyncThunk(
+    serviceInstance,
+    true,
+    res => setUser(res.user),
+    res => fetchUserFailure(res.error)
+  )
 };
 
 export const leaveSession = user => {
   const serviceInstance = new LeaveSession(user);
   return createAsyncThunk(
     serviceInstance,
-    null,
+    false,
     _ => leaveSuccess(),
     res => leaveFailure(res.error)
   );
@@ -62,7 +72,7 @@ export const deleteSession = user => {
   const serviceInstance = new DeleteSession(user);
   return createAsyncThunk(
     serviceInstance,
-    null,
+    false,
     _ => deleteSessionSuccess(),
     res => deleteSessionFailure(res.error)
   );
@@ -72,7 +82,7 @@ export const fetchAuthToken = user => {
   let serviceInstance = new FetchAuthToken(user);
   return createAsyncThunk(
     serviceInstance,
-    () => requestAuthToken(),
+    true,
     res => fetchAuthTokenSuccess(res.user.authToken),
     res => fetchAuthTokenFailure(res.error)
   );
@@ -82,7 +92,7 @@ export const authenticate = user => {
   let serviceInstance = new EncoreAuth(user);
   return createAsyncThunk(
     serviceInstance,
-    null,
+    false,
     null,
     res => authFailure(res.error),
   );
@@ -92,7 +102,7 @@ export const synchronize = user => {
   let serviceInstance = new PlayerSynchronize(user);
   return createAsyncThunk(
     serviceInstance,
-    () => requestSynchronize(),
+    true,
     res => synchronizeSuccess(res.synchronized),
     res => synchronizeFailure(res.error)
   );
@@ -102,7 +112,7 @@ export const desynchronize = user => {
   let serviceInstance = new PlayerDesynchronize(user);
   return createAsyncThunk(
     serviceInstance,
-    () => requestDesynchronize(),
+    false,
     res => synchronizeSuccess(res.synchronized),
     res => desynchronizeFailure(res.error)
   );
@@ -138,6 +148,18 @@ const joinFailure = error => ({
   error: error
 });
 
+const setUser = user => ({
+  type: SET_USER,
+  payload: user,
+  error: null,
+});
+
+const fetchUserFailure = err => ({
+  type: FETCH_USER_INFO_FAILURE,
+  payload: err,
+  error: err
+});
+
 const leaveSuccess = () => ({
   type: LEAVE_SUCCESS,
   payload: null,
@@ -162,12 +184,6 @@ const deleteSessionFailure = error => ({
   error: error
 });
 
-const requestAuthToken = () => ({
-  type: REQUEST_AUTH_TOKEN,
-  payload: null,
-  error: null
-});
-
 const fetchAuthTokenSuccess = user => ({
   type: FETCH_AUTH_TOKEN_SUCCESS,
   payload: user,
@@ -180,12 +196,6 @@ const fetchAuthTokenFailure = error => ({
   error: error
 });
 
-const requestSynchronize = () => ({
-  type: REQUEST_SYNCHRONIZE,
-  payload: null,
-  error: null
-});
-
 const synchronizeSuccess = synchronized => ({
   type: SYNCHRONIZE_SUCCESS,
   payload: synchronized,
@@ -196,12 +206,6 @@ const synchronizeFailure = error => ({
   type: SYNCHRONIZE_FAILURE,
   payload: null,
   error: error
-});
-
-const requestDesynchronize = () => ({
-  type: REQUEST_DESYNCHRONIZE,
-  payload: null,
-  error: null
 });
 
 const desynchronizeFailure = error => ({

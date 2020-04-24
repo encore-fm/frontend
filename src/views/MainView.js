@@ -4,12 +4,12 @@ import {Redirect} from 'react-router-dom';
 
 import PlayList from '../containers/PlayList';
 import SongSearch from '../containers/SongSearch';
-import {authenticate} from "../actions/user";
 import Player from "../containers/Player";
 import {setPlayerState} from "../actions/player";
 import parsePlaylist from "../services/backend/helpers/parsePlaylist";
 import {setPlaylist} from "../actions/playlist";
 import {API_BASE_URL} from "../services/backend/constants";
+import {fetchUserInfo} from "../actions/user";
 
 const MainView = (props) => {
   const {isLogged, user} = props;
@@ -18,8 +18,8 @@ const MainView = (props) => {
   useEffect(() => {
     if (!user) return;
 
-    // authenticate user
-    props.dispatch(authenticate(user));
+    // authenticate user and update fields
+    props.dispatch(fetchUserInfo(user));
     // register sse event source
     const eventSource = new EventSource(`${API_BASE_URL}/events/${user.username}/${user.sessionID}`);
     // listen for incoming playlist change events and set the state playlist accordingly
