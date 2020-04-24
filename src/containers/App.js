@@ -31,7 +31,7 @@ const App = (props) => {
       window.removeEventListener('beforeunload', desynchronizeFn);
     }
   }, [user]);
-  
+
   return (
     <Router>
       <div className="App">
