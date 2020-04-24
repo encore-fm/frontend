@@ -11,12 +11,10 @@ import {
   REQUEST_PLAYER_SKIP,
   REQUEST_PLAYER_STATE
 } from "../actions/player";
-import {REQUEST_USER_LIST} from "../actions/userList";
 
 export default (state = false, action) => {
   switch (action.type) {
     case REQUEST_PLAYLIST:
-    case REQUEST_USER_LIST:
     case REQUEST_SONGS:
     case REQUEST_AUTH_TOKEN:
     case REQUEST_CLIENT_TOKEN:
