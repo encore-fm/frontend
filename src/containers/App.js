@@ -11,9 +11,21 @@ import JoinSessionView from "../views/JoinSessionView";
 import './App.scss'
 import 'normalize.css'
 import UserList from "./UserList";
+import GetStartedView from "../views/GetStartedView";
+import {desynchronize} from "../actions/user";
+import {connect} from "react-redux";
 
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  componentWillUnmount() {
+    if (this.props.user) this.props.dispatch(desynchronize(this.props.user)); // desynchronize user when unmounting
+  }
+
   render() {
     return (
       <Router>
@@ -27,6 +39,7 @@ class App extends Component {
             <Route path="/player" component={MainView}/>
             <Route path="/add" component={MainView}/>
             <Route path="/profile" component={UserList}/>
+            <Route path="/get-started" component={GetStartedView}/>
           </Switch>
         </div>
       </Router>
@@ -34,4 +47,8 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(
+  state => ({
+    user: state.user,
+  })
+)(App);

@@ -35,7 +35,6 @@ const MainView = (props) => {
     );
 
     return () => {
-      props.dispatch(desynchronize(user)); // desynchronize user when unmounting
       eventSource.close()
     }
   }, []);
