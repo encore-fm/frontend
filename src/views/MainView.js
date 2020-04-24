@@ -11,6 +11,8 @@ import {setPlaylist} from "../actions/playlist";
 import {API_BASE_URL} from "../services/backend/constants";
 import {desynchronize, fetchUserInfo} from "../actions/user";
 import UserList from "../containers/UserList";
+import {setUserList} from "../actions/userList";
+import parseUserList from "../services/backend/helpers/parseUserList";
 
 const MainView = (props) => {
   const {isLogged, menuOpen, user} = props;
@@ -33,6 +35,11 @@ const MainView = (props) => {
       'sse:player_state_change',
       e => handlePlayerStateChange(JSON.parse(e.data))
     );
+    // listen for incoming user list change events
+    eventSource.addEventListener(
+      'sse:user_list_change',
+      e => handleUserListChange(JSON.parse(e.data))
+    );
 
     return () => {
       props.dispatch(desynchronize(user)); // desynchronize user when unmounting
@@ -40,11 +47,16 @@ const MainView = (props) => {
     }
   }, []);
 
+  // sse handlers
   const handlePlaylistChange = data => {
     const newPlaylist = parsePlaylist(data);
     props.dispatch(setPlaylist(newPlaylist));
   };
   const handlePlayerStateChange = data => props.dispatch(setPlayerState(data));
+  const handleUserListChange = data => {
+    const newUserList = parseUserList(data);
+    props.dispatch(setUserList(newUserList));
+  };
 
   const renderIsLogged = () => {
     const path = window.location.pathname;
