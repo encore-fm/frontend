@@ -22,7 +22,8 @@ const SongSearch = (props) => {
       return
     }
     if (query) props.dispatch(fetchSongs(query, clientToken));
-    else props.dispatch(fetchFavouriteSongs(user));
+    else
+      if (user.spotifyAuthorized) props.dispatch(fetchFavouriteSongs(user));
   }, [query, clientToken]);
 
   const handleClose = () => {
