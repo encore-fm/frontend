@@ -1,0 +1,9 @@
+@import "../variables";
+
+.CallbackAuthError {
+  padding: 1em;
+
+  a {
+    color: $highlight_color;
+  }
+}

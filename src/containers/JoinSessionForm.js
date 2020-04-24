@@ -33,7 +33,7 @@ const JoinSessionForm = (props) => {
   }, [user, error]);
 
   const redirectAuthorize = () => {
-    if (isLogged) window.location.href = user.authUrl;
+    if (isLogged) window.open(user.authUrl, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
   };
 
   const redirectPlayer = () => {

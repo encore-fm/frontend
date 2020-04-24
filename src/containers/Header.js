@@ -22,13 +22,7 @@ const Header = (props) => {
       if (!window.confirm('You need to connect to Spotify to synchronize.\nConnect to Spotify?')) return;
 
       // redirect user to Spotify
-      const popup = window.open(user.authUrl, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
-      popup.setInterval(() => {
-        console.log(('lol'));
-        if (popup.location.hostname !== 'accounts.spotify.com') {
-          popup.close();
-        }
-      }, 50);
+      window.open(user.authUrl, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
     }
   };
 

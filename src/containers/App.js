@@ -11,6 +11,7 @@ import JoinSessionView from "../views/JoinSessionView";
 import './App.scss'
 import 'normalize.css'
 import UserList from "./UserList";
+import CallbackView from "../views/CallbackView";
 
 
 class App extends Component {
@@ -27,6 +28,7 @@ class App extends Component {
             <Route path="/player" component={MainView}/>
             <Route path="/add" component={MainView}/>
             <Route path="/profile" component={UserList}/>
+            <Route path="/callback/:state" component={CallbackView} />
           </Switch>
         </div>
       </Router>
