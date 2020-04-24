@@ -5,11 +5,11 @@ import {connect} from "react-redux";
 import {deleteSession, desynchronize, leaveSession, synchronize} from "../actions/user";
 import IconMenu from "../components/icons/IconMenu";
 import IconClose from "../components/icons/IconClose";
+import {closeMenu, openMenu} from "../actions/menu";
 
 const Header = (props) => {
   const history = useHistory();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const {isLogged, user} = props;
+  const {isLogged, menuOpen, user} = props;
 
   const handleSync = () => {
     user.spotifySynchronized
@@ -18,11 +18,15 @@ const Header = (props) => {
   };
 
   const handleMenuClose = () => {
-    setMenuOpen(false);
+    props.dispatch(closeMenu())
   };
 
   const handleMenuOpen = () => {
-    setMenuOpen(true);
+    props.dispatch(openMenu())
+  };
+
+  const handleClickAdd = () => {
+    props.dispatch(closeMenu())
   };
 
   const copyInviteLink = () => {
@@ -60,7 +64,7 @@ const Header = (props) => {
                 className={`Header__syncButton${!user.spotifySynchronized ? ' disabled' : ''}`}
               >sync
               </li>
-              <li><Link to="/add">add</Link></li>
+              <li><Link to="/add" onClick={handleClickAdd}>add</Link></li>
               <li>
                 {!menuOpen
                   ? <IconMenu onClick={handleMenuOpen}/>
@@ -90,5 +94,6 @@ export default connect(
   state => ({
     isLogged: state.isLogged,
     user: state.user,
+    menuOpen: state.menuOpen,
   })
 )(Header);

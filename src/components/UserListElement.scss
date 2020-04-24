@@ -1,0 +1,19 @@
+@import "../variables";
+
+.UserListElement {
+  display: flex;
+  justify-content: space-between;
+
+  width: 200px;
+
+  .highlight {
+    color: $highlight_color;
+  }
+
+  .host {
+    font-size: smaller;
+    font-style: italic;
+  }
+}
+
+

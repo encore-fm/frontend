@@ -10,9 +10,10 @@ import parsePlaylist from "../services/backend/helpers/parsePlaylist";
 import {setPlaylist} from "../actions/playlist";
 import {API_BASE_URL} from "../services/backend/constants";
 import {fetchUserInfo} from "../actions/user";
+import UserList from "../containers/UserList";
 
 const MainView = (props) => {
-  const {isLogged, user} = props;
+  const {isLogged, menuOpen, user} = props;
 
   // initialize event source and close it when component unmounts
   useEffect(() => {
@@ -44,19 +45,19 @@ const MainView = (props) => {
 
   const renderIsLogged = () => {
     const path = window.location.pathname;
-    switch (path) {
-      case '/player':
-        return <PlayList/>;
-      case '/add':
-        return <SongSearch/>
-    }
+    return (
+      <React.Fragment>
+        {menuOpen && <UserList/>}
+        {!menuOpen && path === '/player' && <PlayList/>}
+        {!menuOpen && path === '/add' && <SongSearch/>}
+        <Player />
+      </React.Fragment>
+    )
   };
-  const redirect = <Redirect to="/"/>;
 
   return (
     <div className="MainView">
-      {isLogged ? renderIsLogged() : redirect}
-      {isLogged && <Player />}
+      {isLogged ? renderIsLogged() : <Redirect to="/"/>}
     </div>
   )
 };
@@ -65,6 +66,7 @@ export default connect(
   state => ({
     isLogged: state.isLogged,
     user: state.user,
+    menuOpen: state.menuOpen,
   })
 )(MainView);
 
