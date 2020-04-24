@@ -12,9 +12,17 @@ const Header = (props) => {
   const {isLogged, menuOpen, user} = props;
 
   const handleSync = () => {
-    user.spotifySynchronized
-      ? props.dispatch(desynchronize(user))
-      : props.dispatch(synchronize(user))
+    // handle sync normally
+    if (user.spotifyAuthorized) {
+      user.spotifySynchronized
+        ? props.dispatch(desynchronize(user))
+        : props.dispatch(synchronize(user))
+    } else {
+      // ask user to authorize
+      if (!window.confirm('You need to connect to Spotify to synchronize.\nConnect to Spotify?')) return;
+      // redirect user to Spotify
+      window.location.href = user.authUrl;
+    }
   };
 
   const handleMenuClose = () => {

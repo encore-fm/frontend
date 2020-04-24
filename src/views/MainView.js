@@ -9,7 +9,7 @@ import {setPlayerState} from "../actions/player";
 import parsePlaylist from "../services/backend/helpers/parsePlaylist";
 import {setPlaylist} from "../actions/playlist";
 import {API_BASE_URL} from "../services/backend/constants";
-import {fetchUserInfo} from "../actions/user";
+import {desynchronize, fetchUserInfo} from "../actions/user";
 import UserList from "../containers/UserList";
 
 const MainView = (props) => {
@@ -34,7 +34,10 @@ const MainView = (props) => {
       e => handlePlayerStateChange(JSON.parse(e.data))
     );
 
-    return () => eventSource.close()
+    return () => {
+      props.dispatch(desynchronize(user)); // desynchronize user when unmounting
+      eventSource.close()
+    }
   }, []);
 
   const handlePlaylistChange = data => {
