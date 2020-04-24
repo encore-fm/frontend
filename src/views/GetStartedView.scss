@@ -1,0 +1,36 @@
+@import "../variables";
+
+.GetStartedView {
+  padding: 1em;
+  font-weight: normal;
+  text-align: justify;
+
+  max-width: 600px;
+
+  h2, h3 {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+  }
+
+  h2 {
+    padding-bottom: 1em;
+  }
+
+  section {
+    margin-bottom: 3em;
+  }
+
+  article {
+    margin-bottom: 1em;
+  }
+
+  .highlight {
+    color: $highlight_color;
+    font-weight: bold;
+  }
+
+  .link-like {
+    cursor: pointer;
+  }
+}

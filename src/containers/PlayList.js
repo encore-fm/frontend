@@ -38,7 +38,9 @@ const PlayList = (props) => {
       {playlist.length === 0 && (
         <div className="Playlist__emptyHelp">
           playlist is currently empty.<br />
-          you can suggest songs by clicking <Link to="/add" onClick={handleClickAdd}>add</Link> on the top right corner.
+          you can suggest songs by clicking <Link to="/add" onClick={handleClickAdd}>add</Link> on the top right corner.<br />
+          <br />
+          <Link to="/get-started">learn more</Link>
         </div>
       )}
     </div>
