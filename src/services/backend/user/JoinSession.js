@@ -1,6 +1,6 @@
 import {API_BASE_URL, STATUS_SUCCESS} from "../constants";
 import fetchWithData from "../helpers/fetchWithData";
-import {parseUserData} from "./parse";
+import {parseInitialUserData} from "../helpers/parseUser";
 
 class JoinSession {
   constructor(username, sessionID) {
@@ -22,7 +22,7 @@ class JoinSession {
   }
 
   parseData = data => {
-    this._user = parseUserData(this._user, data)
+    this._user = parseInitialUserData(this._user, data)
   };
 
 

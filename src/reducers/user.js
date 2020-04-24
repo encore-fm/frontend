@@ -1,7 +1,7 @@
 import {
   CREATE_SUCCESS, DELETE_SESSION_SUCCESS,
   FETCH_AUTH_TOKEN_SUCCESS,
-  JOIN_SUCCESS, LEAVE_SUCCESS,
+  JOIN_SUCCESS, LEAVE_SUCCESS, SET_USER,
   SYNCHRONIZE_SUCCESS
 } from "../actions/user";
 
@@ -10,6 +10,7 @@ export default (state = null, action) => {
   switch (action.type) {
     case CREATE_SUCCESS:
     case JOIN_SUCCESS:
+    case SET_USER:
       return {...action.payload};
     case FETCH_AUTH_TOKEN_SUCCESS:
       return {

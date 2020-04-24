@@ -1,28 +1,18 @@
-import {STATUS_SUCCESS} from "../services/backend/constants";
 import FetchSessionInfo from "../services/backend/fetching/FetchSessionInfo";
+import createAsyncThunk from "./helpers/createAsyncThunk";
 
-export const REQUEST_SESSION_INFO = 'REQUEST_SESSION_INFO';
 export const FETCH_SESSION_INFO_SUCCESS = 'FETCH_SESSION_INFO_SUCCESS';
 export const FETCH_SESSION_INFO_FAILURE = 'FETCH_SESSION_INFO_FAILURE';
 
 export const fetchSessionInfo = sessionID => {
-  return dispatch => {
-    dispatch(requestSessionInfo());
-    return new FetchSessionInfo(sessionID).perform()
-      .then(res => {
-        if (res.status === STATUS_SUCCESS)
-          dispatch(fetchSessionInfoSuccess(res.sessionInfo));
-        else
-          dispatch(fetchSessionInfoFailure(res.error));
-      });
-  };
+  let serviceInstance = new FetchSessionInfo(sessionID);
+  return createAsyncThunk(
+    serviceInstance,
+    true,
+    res => fetchSessionInfoSuccess(res.sessionInfo),
+    res => fetchSessionInfoFailure(res.error)
+  );
 };
-
-const requestSessionInfo = () => ({
-  type: REQUEST_SESSION_INFO,
-  payload: null,
-  error: null
-});
 
 const fetchSessionInfoSuccess = sessionInfo => ({
   type: FETCH_SESSION_INFO_SUCCESS,
