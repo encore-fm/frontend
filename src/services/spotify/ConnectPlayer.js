@@ -1,5 +1,5 @@
 import {STATUS_SUCCESS} from "../backend/constants";
-import fetchWithoutData from "../backend/helpers/fetchWithoutData";
+import fetchWithoutData from "../helpers/fetchWithoutData";
 
 class ConnectPlayer {
   constructor(deviceID, token) {

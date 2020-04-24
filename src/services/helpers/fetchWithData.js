@@ -1,4 +1,4 @@
-import {FETCH_ERROR, STATUS_FAILURE, STATUS_UNAUTHORIZED} from "../constants";
+import {FETCH_ERROR, STATUS_FAILURE, STATUS_UNAUTHORIZED} from "../backend/constants";
 
 // fetches the given request, passes the data through the given dataParser, updates the relevant fields in the
 // given service instance and finally returns it.

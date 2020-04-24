@@ -6,7 +6,7 @@ import PlayList from '../containers/PlayList';
 import SongSearch from '../containers/SongSearch';
 import Player from "../containers/Player";
 import {setPlayerState} from "../actions/player";
-import parsePlaylist from "../services/backend/helpers/parsePlaylist";
+import parsePlaylist from "../services/helpers/parsePlaylist";
 import {setPlaylist} from "../actions/playlist";
 import {API_BASE_URL} from "../services/backend/constants";
 import {fetchUserInfo} from "../actions/user";

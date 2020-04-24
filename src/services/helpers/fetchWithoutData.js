@@ -1,4 +1,4 @@
-import {FETCH_ERROR, STATUS_FAILURE, STATUS_SUCCESS, STATUS_UNAUTHORIZED} from "../constants";
+import {FETCH_ERROR, STATUS_FAILURE, STATUS_SUCCESS, STATUS_UNAUTHORIZED} from "../backend/constants";
 
 // fetches the given request, handles errors and returns the given serviceInstance
 export default (request, serviceInstance) => {

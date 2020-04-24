@@ -1,5 +1,6 @@
 import {STATUS_SUCCESS} from "../backend/constants";
-import fetchWithData from "../backend/helpers/fetchWithData";
+import fetchWithData from "../helpers/fetchWithData";
+import {parseSpotifyTracks} from "../helpers/parseSpotifyTracks";
 
 class FetchSongs {
   constructor(query, token) {
@@ -20,17 +21,7 @@ class FetchSongs {
   }
 
   parseData = data => {
-    this._results =  this.results.concat(
-      data.tracks.items.map(track => (
-        {
-          trackName: track.name,
-          trackID: track.id,
-          albumName: track.album.name,
-          artists: track.artists.map(artist => artist.name),
-          coverUrl: track.album.images[0] ? track.album.images[0].url : null,
-          trackDuration: track.duration_ms
-        }
-      )));
+    this._results = parseSpotifyTracks(this.results, data);
   };
 
   get status() {
