@@ -13,7 +13,6 @@ const Header = (props) => {
 
   const handleSync = () => {
     // handle sync normally
-    console.log(user);
     if (user.spotifyAuthorized) {
       user.spotifySynchronized
         ? props.dispatch(desynchronize(user))
