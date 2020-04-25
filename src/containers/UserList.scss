@@ -3,6 +3,12 @@
 
   display: flex;
 
+  @media screen and (max-width: 600px) {
+    & {
+      flex-direction: column;
+    }
+  }
+
   h3 {
     padding: 0;
     margin: 0;
@@ -12,4 +18,11 @@
 .UserList__col {
   margin-right: 4em;
   width: 250px;
+
+  @media screen and (max-width: 600px) {
+    & {
+      margin-right: 0;
+      margin-bottom: 1em;
+    }
+  }
 }
