@@ -34,7 +34,7 @@ const App = (props) => {
           <Route path="/player" component={MainView}/>
           <Route path="/add" component={MainView}/>
           <Route path="/profile" component={UserList}/>
-          <Route path="/callback/:state" component={CallbackView}/>
+          <Route path="/callback/:state/:message?" component={CallbackView}/>
           <Route path="/get-started" component={GetStartedView}/>
           <Route path="/session-not-found" component={SessionNotFoundView}/>
         </Switch>

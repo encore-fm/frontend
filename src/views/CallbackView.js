@@ -3,9 +3,10 @@ import {useParams} from "react-router-dom";
 import {connect} from "react-redux";
 
 import './CallbackView.scss';
+import ContentWrapper from "../components/ContentWrapper";
 
 const CallbackView = (props) => {
-  const {state} = useParams();
+  const {state, message} = useParams();
   const {user} = props;
 
   useEffect(() => {
@@ -17,9 +18,13 @@ const CallbackView = (props) => {
 
   return (
     <div className="CallbackAuthError">
-      spotify authorization failed.<br />
-      click <a href={user.authUrl}>here</a> to try again.<br />
-      close the window to cancel.
+      <ContentWrapper>
+        spotify authorization failed.<br/>
+        click <a href={user.authUrl}>here</a> to try again.<br/>
+        close the window to cancel.<br/>
+        <br/>
+        {message !== '' && message}
+      </ContentWrapper>
     </div>
   )
 };
