@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 
 import Header from './Header';
@@ -13,7 +13,6 @@ import 'normalize.css'
 import UserList from "./UserList";
 import CallbackView from "../views/CallbackView";
 import GetStartedView from "../views/GetStartedView";
-import {desynchronize} from "../actions/user";
 import {connect} from "react-redux";
 import {REQUEST_NOT_AUTHORIZED_ERROR} from "../services/backend/constants";
 import SessionNotFoundView from "../views/SessionNotFoundView";
@@ -21,18 +20,7 @@ import SessionNotFoundView from "../views/SessionNotFoundView";
 
 const App = (props) => {
 
-  const {user, isLogged, error} = props;
-
-  useEffect(() => {
-    const desynchronizeFn = () => {
-      if (isLogged && user && user.spotifyAuthorized) props.dispatch(desynchronize(user));
-    };
-
-    window.addEventListener('beforeunload', desynchronizeFn);
-    return () => {
-      window.removeEventListener('beforeunload', desynchronizeFn);
-    }
-  }, [user]);
+  const {error} = props;
 
   return (
     <Router>
@@ -58,8 +46,6 @@ const App = (props) => {
 
 export default connect(
   state => ({
-    isLogged: state.isLogged,
-    user: state.user,
     error: state.error,
   })
 )(App);
