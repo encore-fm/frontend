@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useParams} from "react-router-dom";
 import {connect} from "react-redux";
 
@@ -8,7 +8,12 @@ const CallbackView = (props) => {
   const {state} = useParams();
   const {user} = props;
 
-  if (state === 'success') window.close();
+  useEffect(() => {
+    if (state === 'success') {
+      window.opener.location.reload();
+      window.close();
+    }
+  }, [state]);
 
   return (
     <div className="CallbackAuthError">
