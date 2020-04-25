@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Redirect, Route, Switch, useHistory} from 'react-router-dom';
 
 import Header from './Header';
 
@@ -18,26 +18,15 @@ import {REQUEST_NOT_AUTHORIZED_ERROR} from "../services/backend/constants";
 import SessionNotFoundView from "../views/SessionNotFoundView";
 import ReactGA from "react-ga";
 import {createBrowserHistory} from "history";
-import {desynchronize} from "../actions/user";
 
 ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
 
 const history = createBrowserHistory();
 
+ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID, { debug: false});
 
 const App = (props) => {
-  const {user, isLogged, error} = props;
-
-  useEffect(() => {
-    const desynchronizeFn = () => {
-      if (isLogged && user && user.spotifyAuthorized) props.dispatch(desynchronize(user));
-    };
-
-    window.addEventListener('beforeunload', desynchronizeFn);
-    return () => {
-      window.removeEventListener('beforeunload', desynchronizeFn);
-    }
-  }, [user]);
+  const {error} = props;
 
   useEffect(() => {
     logPageView(history);
