@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import DefaultTextField from "../components/DefaultTextField";
 import Button from "../components/Button";
-import {joinSession} from "../actions/user";
+import {fetchUserInfo, joinSession} from "../actions/user";
 import {useParams, useHistory} from "react-router-dom";
 import {fetchSessionInfo} from "../actions/sessionInfo";
 
@@ -22,6 +22,7 @@ const JoinSessionForm = (props) => {
 
   useEffect(() => {
     props.dispatch(fetchSessionInfo(sessionID));
+    if (user) props.dispatch(fetchUserInfo(user));
   }, []);
 
   useEffect(() => {
@@ -33,7 +34,9 @@ const JoinSessionForm = (props) => {
   }, [user, error]);
 
   const redirectAuthorize = () => {
-    if (isLogged) window.open(user.authUrl, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
+    if (isLogged) {
+      window.open(user.authUrl, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
+    }
   };
 
   const redirectPlayer = () => {
