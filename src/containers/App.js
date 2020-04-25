@@ -23,7 +23,7 @@ const App = (props) => {
 
   useEffect(() => {
     const desynchronizeFn = () => {
-      if (isLogged && user) props.dispatch(desynchronize(user));
+      if (isLogged && user && user.spotifyAuthorized) props.dispatch(desynchronize(user));
     };
 
     window.addEventListener('beforeunload', desynchronizeFn);
