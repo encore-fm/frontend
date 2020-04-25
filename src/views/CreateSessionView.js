@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ContentWrapper from '../components/ContentWrapper';
 import CreateSessionForm from "../containers/CreateSessionForm";
 import {connect} from "react-redux";
@@ -7,7 +7,10 @@ import {authenticate} from "../actions/user";
 
 const CreateSessionView = (props) => {
   const {user, isLogged} = props;
-  if (user) props.dispatch(authenticate(user));
+  useEffect(() => {
+    if (user) props.dispatch(authenticate(user));
+  }, [user]);
+
 
   return (
     <ContentWrapper>
