@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 
 import Header from './Header';
 
@@ -15,11 +15,13 @@ import CallbackView from "../views/CallbackView";
 import GetStartedView from "../views/GetStartedView";
 import {desynchronize} from "../actions/user";
 import {connect} from "react-redux";
+import {REQUEST_NOT_AUTHORIZED_ERROR} from "../services/backend/constants";
+import SessionNotFoundView from "../views/SessionNotFoundView";
 
 
 const App = (props) => {
 
-  const {user} = props;
+  const {user, error} = props;
 
   useEffect(() => {
     const desynchronizeFn = () => {
@@ -46,7 +48,9 @@ const App = (props) => {
           <Route path="/profile" component={UserList}/>
           <Route path="/callback/:state" component={CallbackView}/>
           <Route path="/get-started" component={GetStartedView}/>
+          <Route path="/sessionNotFound" component={SessionNotFoundView}/>
         </Switch>
+        {error.error === REQUEST_NOT_AUTHORIZED_ERROR  && <Redirect to="/sessionNotFound"/>}
       </div>
     </Router>
   );
@@ -55,5 +59,6 @@ const App = (props) => {
 export default connect(
   state => ({
     user: state.user,
+    error: state.error,
   })
 )(App);
