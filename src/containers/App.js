@@ -50,7 +50,7 @@ const App = (props) => {
           <Route path="/get-started" component={GetStartedView}/>
           <Route path="/session-not-found" component={SessionNotFoundView}/>
         </Switch>
-        {error.error === REQUEST_NOT_AUTHORIZED_ERROR  && <Redirect to="/sessionNotFound"/>}
+        {error.error === REQUEST_NOT_AUTHORIZED_ERROR  && <Redirect to="/session-not-found"/>}
       </div>
     </Router>
   );
