@@ -19,11 +19,11 @@ import {connect} from "react-redux";
 
 const App = (props) => {
 
-  const {user} = props;
+  const {user, isLogged} = props;
 
   useEffect(() => {
     const desynchronizeFn = () => {
-      if (user) props.dispatch(desynchronize(user));
+      if (isLogged && user) props.dispatch(desynchronize(user));
     };
 
     window.addEventListener('beforeunload', desynchronizeFn);
@@ -54,6 +54,7 @@ const App = (props) => {
 
 export default connect(
   state => ({
+    isLogged: state.isLogged,
     user: state.user,
   })
 )(App);

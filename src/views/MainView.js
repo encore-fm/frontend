@@ -5,7 +5,7 @@ import {Redirect} from 'react-router-dom';
 import PlayList from '../containers/PlayList';
 import SongSearch from '../containers/SongSearch';
 import Player from "../containers/Player";
-import {setPlayerState} from "../actions/player";
+import {play, setPlayerState} from "../actions/player";
 import parsePlaylist from "../services/helpers/parsePlaylist";
 import {setPlaylist} from "../actions/playlist";
 import {API_BASE_URL} from "../services/backend/constants";
@@ -48,11 +48,13 @@ const MainView = (props) => {
 
   // sse handlers
   const handlePlaylistChange = data => {
+    if (!data) return;
     const newPlaylist = parsePlaylist(data);
     props.dispatch(setPlaylist(newPlaylist));
   };
   const handlePlayerStateChange = data => props.dispatch(setPlayerState(data));
   const handleUserListChange = data => {
+    if (!data) return;
     const newUserList = parseUserList(data);
     props.dispatch(setUserList(newUserList));
   };
