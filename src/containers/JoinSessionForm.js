@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import DefaultTextField from "../components/DefaultTextField";
 import Button from "../components/Button";
 import {fetchUserInfo, joinSession} from "../actions/user";
-import {useParams, useHistory} from "react-router-dom";
+import {useParams, useHistory, Redirect} from "react-router-dom";
 import {fetchSessionInfo} from "../actions/sessionInfo";
 
 
@@ -53,7 +53,7 @@ const JoinSessionForm = (props) => {
   };
 
   const renderStageName = () => {
-    if (!sessionInfo) return "";
+    if (!sessionInfo) return <Redirect to="/session-not-found" />;
     else return (
       <div>
         joining <span className="highlight">{sessionInfo.admin_name}</span>'s session.<br/>

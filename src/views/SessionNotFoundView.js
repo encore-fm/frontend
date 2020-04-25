@@ -11,7 +11,7 @@ const SessionNotFoundView = (props) => {
 
   return (
    <ContentWrapper>
-     it looks like the session you were in was deleted.<br />
+     it looks like the session you are trying to access was deleted or does not exist.<br />
      <Link to="/create">create</Link> a new session or <Link to="/join">join</Link> one.
    </ContentWrapper>
   )
