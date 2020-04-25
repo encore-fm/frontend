@@ -9,7 +9,7 @@ import {authenticate} from "../actions/user";
 const JoinSessionView = (props) => {
   const {sessionID} = useParams();
   const {user, isLogged} = props;
-
+  if (user) props.dispatch(authenticate(user));
   return (
     <ContentWrapper>
       {!sessionID && <EnterSessionIDForm />}
