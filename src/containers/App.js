@@ -48,7 +48,7 @@ const App = (props) => {
           <Route path="/profile" component={UserList}/>
           <Route path="/callback/:state" component={CallbackView}/>
           <Route path="/get-started" component={GetStartedView}/>
-          <Route path="/sessionNotFound" component={SessionNotFoundView}/>
+          <Route path="/session-not-found" component={SessionNotFoundView}/>
         </Switch>
         {error.error === REQUEST_NOT_AUTHORIZED_ERROR  && <Redirect to="/sessionNotFound"/>}
       </div>
