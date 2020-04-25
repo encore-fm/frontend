@@ -21,7 +21,7 @@ import ReactGA from "react-ga";
 import {createBrowserHistory} from "history";
 
 
-ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID, { debug: process.env.REACT_APP_GA_DEBUG});
+ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID, { debug: false});
 
 const history = createBrowserHistory();
 
