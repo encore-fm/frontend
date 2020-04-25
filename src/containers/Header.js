@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import './Header.scss';
-import {Link, Redirect, useHistory} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {connect} from "react-redux";
-import {deleteSession, desynchronize, leaveSession, synchronize} from "../actions/user";
+import {deleteSession, desynchronize, fetchUserInfo, leaveSession, synchronize} from "../actions/user";
 import IconMenu from "../components/icons/IconMenu";
 import IconClose from "../components/icons/IconClose";
 import {closeMenu, openMenu} from "../actions/menu";
@@ -10,6 +10,10 @@ import {closeMenu, openMenu} from "../actions/menu";
 const Header = (props) => {
   const history = useHistory();
   const {isLogged, menuOpen, user} = props;
+
+  useEffect(() => {
+    if (user) props.dispatch(fetchUserInfo(user));
+  }, []);
 
   const handleSync = () => {
     // handle sync normally
