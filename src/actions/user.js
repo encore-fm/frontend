@@ -8,6 +8,7 @@ import PlayerDesynchronize from "../services/backend/user/PlayerDesynchronize";
 import LeaveSession from "../services/backend/user/LeaveSession";
 import DeleteSession from "../services/backend/user/DeleteSession";
 import FetchUserInfo from "../services/backend/fetching/FetchUserInfo";
+import ReactGA from "react-ga";
 
 export const CREATE_SUCCESS = 'CREATE_SUCCESS';
 export const CREATE_FAILURE = 'CREATE_FAILURE';
@@ -30,6 +31,10 @@ export const SYNCHRONIZE_FAILURE = 'SYNCHRONIZE_FAILURE';
 export const DESYNCHRONIZE_FAILURE = 'DESYNCHRONIZE_FAILURE';
 
 export const createSession = adminName => {
+  ReactGA.event({
+    category: 'User',
+    action: 'createSession'
+  });
   let serviceInstance = new CreateSession(adminName);
   return createAsyncThunk(
     serviceInstance,
@@ -40,6 +45,10 @@ export const createSession = adminName => {
 };
 
 export const joinSession = (username, sessionID) => {
+  ReactGA.event({
+    category: 'User',
+    action: 'joinSession'
+  });
   let serviceInstance = new JoinSession(username, sessionID);
   return createAsyncThunk(
     serviceInstance,
@@ -60,6 +69,10 @@ export const fetchUserInfo = (user) => {
 };
 
 export const leaveSession = user => {
+  ReactGA.event({
+    category: 'User',
+    action: 'leaveSession'
+  });
   const serviceInstance = new LeaveSession(user);
   return createAsyncThunk(
     serviceInstance,
@@ -70,6 +83,10 @@ export const leaveSession = user => {
 };
 
 export const deleteSession = user => {
+  ReactGA.event({
+    category: 'User',
+    action: 'deleteSession'
+  });
   const serviceInstance = new DeleteSession(user);
   return createAsyncThunk(
     serviceInstance,
@@ -100,6 +117,10 @@ export const authenticate = user => {
 };
 
 export const synchronize = user => {
+  ReactGA.event({
+    category: 'User',
+    action: 'synchronize'
+  });
   let serviceInstance = new PlayerSynchronize(user);
   return createAsyncThunk(
     serviceInstance,
@@ -110,6 +131,10 @@ export const synchronize = user => {
 };
 
 export const desynchronize = user => {
+  ReactGA.event({
+    category: 'User',
+    action: 'desynchronize'
+  });
   let serviceInstance = new PlayerDesynchronize(user);
   return createAsyncThunk(
     serviceInstance,
