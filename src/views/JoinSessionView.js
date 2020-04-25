@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ContentWrapper from '../components/ContentWrapper';
 import {connect} from "react-redux";
 import {Redirect, useParams} from "react-router-dom";
@@ -10,10 +10,9 @@ const JoinSessionView = (props) => {
   const {sessionID} = useParams();
   const {user, isLogged} = props;
   if (user) props.dispatch(authenticate(user));
-
   return (
     <ContentWrapper>
-      {!sessionID && <EnterSessionIDForm />}
+      {!sessionID && <EnterSessionIDForm/>}
       {sessionID && <JoinSessionForm/>}
       {isLogged && user.spotifyAuthorized && <Redirect to="/player"/>}
     </ContentWrapper>

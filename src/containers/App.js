@@ -21,11 +21,11 @@ import SessionNotFoundView from "../views/SessionNotFoundView";
 
 const App = (props) => {
 
-  const {user, error} = props;
+  const {user, isLogged, error} = props;
 
   useEffect(() => {
     const desynchronizeFn = () => {
-      if (user) props.dispatch(desynchronize(user));
+      if (isLogged && user && user.spotifyAuthorized) props.dispatch(desynchronize(user));
     };
 
     window.addEventListener('beforeunload', desynchronizeFn);
@@ -58,6 +58,7 @@ const App = (props) => {
 
 export default connect(
   state => ({
+    isLogged: state.isLogged,
     user: state.user,
     error: state.error,
   })
