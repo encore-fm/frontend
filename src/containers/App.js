@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Redirect, Route, Switch, useHistory} from 'react-router-dom';
 
 import Header from './Header';
 
@@ -16,10 +16,9 @@ import GetStartedView from "../views/GetStartedView";
 import {connect} from "react-redux";
 import {REQUEST_NOT_AUTHORIZED_ERROR} from "../services/backend/constants";
 import SessionNotFoundView from "../views/SessionNotFoundView";
-
+import {withTracker} from "./withTracker";
 
 const App = (props) => {
-
   const {error} = props;
 
   return (
@@ -38,7 +37,7 @@ const App = (props) => {
           <Route path="/get-started" component={GetStartedView}/>
           <Route path="/session-not-found" component={SessionNotFoundView}/>
         </Switch>
-        {error.error === REQUEST_NOT_AUTHORIZED_ERROR  && <Redirect to="/session-not-found"/>}
+        {error.error === REQUEST_NOT_AUTHORIZED_ERROR && <Redirect to="/session-not-found"/>}
       </div>
     </Router>
   );

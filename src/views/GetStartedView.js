@@ -57,7 +57,7 @@ const GetStartedView = () => {
       <section>
         <h2>leaving the session</h2>
         <article>
-          Your <span className="highlight">profile</span>, including the current session you're in, is <span className="highlight">saved in your browser</span>. This means that you can jump back into your previous session as soon as you start <Link href="/">encore-fm.com</Link> - as long as the session still exists. If you want to leave the session, click on <span className="highlight">leave session</span> in the toolbar menu. If you are the session's host, this will read <span className="highlight">delete session</span> instead. Note that deleting the session will also <span className="highlight">delete all the session's users</span> with it.
+          Your <span className="highlight">profile</span>, including the current session you're in, is <span className="highlight">saved in your browser</span>. This means that you can jump back into your previous session as soon as you start <Link to="/">encore-fm.com</Link> - as long as the session still exists. If you want to leave the session, click on <span className="highlight">leave session</span> in the toolbar menu. If you are the session's host, this will read <span className="highlight">delete session</span> instead. Note that deleting the session will also <span className="highlight">delete all the session's users</span> with it.
         </article>
       </section>
     </div>
