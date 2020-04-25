@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {Redirect} from 'react-router-dom';
+import {Redirect, useHistory} from 'react-router-dom';
 
 import PlayList from '../containers/PlayList';
 import SongSearch from '../containers/SongSearch';
@@ -9,20 +9,28 @@ import {play, setPlayerState} from "../actions/player";
 import parsePlaylist from "../services/helpers/parsePlaylist";
 import {setPlaylist} from "../actions/playlist";
 import {API_BASE_URL} from "../services/backend/constants";
-import {desynchronize, fetchUserInfo} from "../actions/user";
+import {deleteSession, desynchronize, fetchUserInfo} from "../actions/user";
 import UserList from "../containers/UserList";
 import {setUserList} from "../actions/userList";
 import parseUserList from "../services/helpers/parseUserList";
 
 const MainView = (props) => {
   const {isLogged, menuOpen, user} = props;
+  const {isAdmin, spotifyAuthorized} = user;
+  const history = useHistory();
 
   // initialize event source and close it when component unmounts
   useEffect(() => {
-    if (!user) return;
-
     // authenticate user and update fields
+    if (!user) return;
     props.dispatch(fetchUserInfo(user));
+    // block an admin from accessing his session if he's not authenticated (auth flow bug)
+    if (user && user.isAdmin && user.spotifyAuthorized === false) {
+      props.dispatch(deleteSession(user));
+      localStorage.clear();
+      history.push('/');
+    }
+
     // register sse event source
     const eventSource = new EventSource(`${API_BASE_URL}/events/${user.username}/${user.sessionID}`);
     // listen for incoming playlist change events and set the state playlist accordingly
@@ -44,7 +52,7 @@ const MainView = (props) => {
     return () => {
       eventSource.close()
     }
-  }, []);
+  }, [isAdmin, spotifyAuthorized]);
 
   // sse handlers
   const handlePlaylistChange = data => {
