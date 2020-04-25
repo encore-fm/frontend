@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import './Header.scss';
-import {Link, Redirect, useHistory} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {connect} from "react-redux";
-import {deleteSession, desynchronize, leaveSession, synchronize} from "../actions/user";
+import {deleteSession, desynchronize, leaveSession, logOut, synchronize} from "../actions/user";
 import IconMenu from "../components/icons/IconMenu";
 import IconClose from "../components/icons/IconClose";
 import {closeMenu, openMenu} from "../actions/menu";
@@ -49,6 +49,7 @@ const Header = (props) => {
     if (!window.confirm('are you sure?\nthis session will be deleted')) return;
 
     props.dispatch(deleteSession(user));
+    props.dispatch(logOut()); // clears user, isLogged and error
     localStorage.clear();
     history.push('/');
   };
@@ -57,6 +58,7 @@ const Header = (props) => {
     if (!window.confirm('are you sure? your score will be deleted')) return;
 
     props.dispatch(leaveSession(user));
+    props.dispatch(logOut()); // clears user, isLogged and error
     localStorage.clear();
     history.push('/');
   };

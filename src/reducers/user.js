@@ -1,7 +1,7 @@
 import {
   CREATE_SUCCESS, DELETE_SESSION_SUCCESS,
   FETCH_AUTH_TOKEN_SUCCESS,
-  JOIN_SUCCESS, LEAVE_SUCCESS, SET_USER,
+  JOIN_SUCCESS, LEAVE_SUCCESS, LOG_OUT, SET_USER,
   SYNCHRONIZE_SUCCESS
 } from "../actions/user";
 
@@ -24,6 +24,7 @@ export default (state = null, action) => {
       };
     case LEAVE_SUCCESS:
     case DELETE_SESSION_SUCCESS:
+    case LOG_OUT:
       return null;
     default:
       return state;

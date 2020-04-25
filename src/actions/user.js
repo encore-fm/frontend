@@ -14,6 +14,7 @@ export const CREATE_FAILURE = 'CREATE_FAILURE';
 export const JOIN_SUCCESS = 'JOIN_SUCCESS';
 export const JOIN_FAILURE = 'JOIN_FAILURE';
 export const SET_USER = 'SET_USER';
+export const LOG_OUT = 'LOG_OUT';
 export const FETCH_USER_INFO_FAILURE = 'FETCH_USER_FAILURE';
 export const LEAVE_SUCCESS = 'LEAVE_SUCCESS';
 export const LEAVE_FAILURE = 'LEAVE_FAILURE';
@@ -122,6 +123,13 @@ export const authFailure = error => ({
   type: AUTH_FAILURE,
   payload: null,
   error: error
+});
+
+// sets user to null, error to intialError and isLogged to false
+export const logOut = () => ({
+  type: LOG_OUT,
+  payload: null,
+  error: null,
 });
 
 const createSuccess = user => ({
