@@ -7,8 +7,9 @@ import {authenticate} from "../actions/user";
 
 const CreateSessionView = (props) => {
   const {user, isLogged} = props;
-
-  if (user) props.dispatch(authenticate(user));
+  useEffect(() => {
+    if (user) props.dispatch(authenticate(user));
+  }, []);
 
   if (isLogged && user.spotifyAuthorized) {
     return <Redirect to="/player"/>
