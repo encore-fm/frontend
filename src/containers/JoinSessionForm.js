@@ -5,6 +5,7 @@ import Button from "../components/Button";
 import {fetchUserInfo, joinSession} from "../actions/user";
 import {useParams, useHistory, Redirect} from "react-router-dom";
 import {fetchSessionInfo} from "../actions/sessionInfo";
+import {SESSION_NOT_FOUND_ERROR} from "../services/backend/constants";
 
 
 const STAGES = Object.freeze({
@@ -53,26 +54,34 @@ const JoinSessionForm = (props) => {
   };
 
   const renderStageName = () => {
-    if (!sessionInfo) return <Redirect to="/session-not-found" />;
-    else return (
-      <div>
-        joining <span className="highlight">{sessionInfo.admin_name}</span>'s session.<br/>
-        please choose your username.<br/>
-        <br/>
+    // only redirect if we know the session isn't valid
+    // !sessionInfo doesn't suffice since the request to fetch the session info is asynchronous.
+    if (!sessionInfo && error.error === SESSION_NOT_FOUND_ERROR)
+      return <Redirect to="/session-not-found" />;
 
-        <form onSubmit={handleSubmitName}>
-          <DefaultTextField
-            placeholder="username"
-            autofocus={true}
-            value={username}
-            onChange={updateField}
-            error={props.error}
-          />
+    else if (sessionInfo)
+      return (
+        <div>
+          joining <span className="highlight">{sessionInfo.admin_name}</span>'s session.<br/>
+          please choose your username.<br/>
           <br/>
-          <Button type="submit" text="next"/>
-        </form>
-      </div>
-    )
+
+          <form onSubmit={handleSubmitName}>
+            <DefaultTextField
+              placeholder="username"
+              autofocus={true}
+              value={username}
+              onChange={updateField}
+              error={props.error}
+            />
+            <br/>
+            <Button type="submit" text="next"/>
+          </form>
+        </div>
+      );
+
+    // while sessionInfo is being fetched
+    else return ""
   };
 
   const renderStageAuth = () => {
