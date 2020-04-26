@@ -26,16 +26,16 @@ const App = (props) => {
       <div className="App">
         <Header/>
         <Switch>
-          <Route exact path="/" component={WelcomeView}/>
-          <Route path="/join/:sessionID?" component={JoinSessionView}/>
-          <Route path="/join" component={JoinSessionView}/>
-          <Route path="/create" component={CreateSessionView}/>
-          <Route path="/player" component={MainView}/>
-          <Route path="/add" component={MainView}/>
-          <Route path="/profile" component={UserList}/>
-          <Route path="/callback/:state/:message?" component={CallbackView}/>
-          <Route path="/get-started" component={GetStartedView}/>
-          <Route path="/session-not-found" component={SessionNotFoundView}/>
+          <Route exact path="/" component={withTracker(WelcomeView)}/>
+          <Route path="/join/:sessionID?" component={withTracker(JoinSessionView)}/>
+          <Route path="/join" component={withTracker(JoinSessionView)}/>
+          <Route path="/create" component={withTracker(CreateSessionView)}/>
+          <Route path="/player" component={withTracker(MainView)}/>
+          <Route path="/add" component={withTracker(MainView)}/>
+          <Route path="/profile" component={withTracker(UserList)}/>
+          <Route path="/callback/:state/:message?" component={withTracker(CallbackView)}/>
+          <Route path="/get-started" component={withTracker(GetStartedView)}/>
+          <Route path="/session-not-found" component={withTracker(SessionNotFoundView)}/>
         </Switch>
         {error.error === REQUEST_NOT_AUTHORIZED_ERROR && <Redirect to="/session-not-found"/>}
       </div>
