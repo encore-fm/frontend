@@ -56,7 +56,7 @@ const JoinSessionForm = (props) => {
   const renderStageName = () => {
     // only redirect if we know the session isn't valid
     // !sessionInfo doesn't suffice since the request to fetch the session info is asynchronous.
-    if (!sessionInfo && error.error === SESSION_NOT_FOUND_ERROR)
+    if (error.error === SESSION_NOT_FOUND_ERROR)
       return <Redirect to="/session-not-found" />;
 
     else if (sessionInfo)
