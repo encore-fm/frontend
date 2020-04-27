@@ -53,7 +53,7 @@ const MainView = (props) => {
     // listen for incoming user synchronized state change events
     eventSource.addEventListener(
       'sse:user_synchronized_change',
-      e => props.dispatch(setSynchronized(JSON.parse(e.data).synchronized))
+      e => props.dispatch(handleUserSynchronizedChange(JSON.parse(e.data)))
     );
 
     return () => {
@@ -73,6 +73,7 @@ const MainView = (props) => {
     const newUserList = parseUserList(data);
     props.dispatch(setUserList(newUserList));
   };
+  const handleUserSynchronizedChange = data => props.dispatch(setSynchronized(data.synchronized));
 
   const renderIsLogged = () => {
     const path = window.location.pathname;
