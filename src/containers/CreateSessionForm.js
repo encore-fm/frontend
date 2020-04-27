@@ -3,14 +3,15 @@ import {connect} from 'react-redux';
 import DefaultTextField from '../components/DefaultTextField';
 import Button from '../components/Button';
 import {createSession} from "../actions/user";
+import isLogged from "../reducers/isLogged";
 
 const CreateSessionForm = (props) => {
   const [username, setUsername] = useState('');
-
+  const {isLogged, user} = props;
+  
   useEffect(() => {
-    const {isLogged, user} = props;
     if (isLogged) window.location.href = user.authUrl;
-  });
+  }, [isLogged]);
 
   const updateField = (event) => {
     setUsername(event.target.value);
