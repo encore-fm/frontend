@@ -229,7 +229,7 @@ const fetchAuthTokenFailure = error => ({
   error: error
 });
 
-const synchronizeSuccess = synchronized => ({
+export const synchronizeSuccess = synchronized => ({
   type: SYNCHRONIZE_SUCCESS,
   payload: synchronized,
   error: null
