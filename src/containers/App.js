@@ -30,8 +30,7 @@ const App = (props) => {
           <Route path="/join/:sessionID?" component={withTracker(JoinSessionView)}/>
           <Route path="/join" component={withTracker(JoinSessionView)}/>
           <Route path="/create" component={withTracker(CreateSessionView)}/>
-          <Route path="/player" component={withTracker(MainView)}/>
-          <Route path="/add" component={withTracker(MainView)}/>
+          <Route path="/(player|add)" component={withTracker(MainView)}/>
           <Route path="/profile" component={withTracker(UserList)}/>
           <Route path="/callback/:state/:message?" component={withTracker(CallbackView)}/>
           <Route path="/get-started" component={withTracker(GetStartedView)}/>
