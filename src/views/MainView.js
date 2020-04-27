@@ -19,9 +19,8 @@ const MainView = (props) => {
   const {isAdmin, spotifyAuthorized} = user;
   const history = useHistory();
 
-  // initialize event source and close it when component unmounts
+  // authenticate user and update fields
   useEffect(() => {
-    // authenticate user and update fields
     if (!user) return;
     props.dispatch(fetchUserInfo(user));
     // block an admin from accessing his session if he's not authenticated (auth flow bug)
@@ -30,7 +29,10 @@ const MainView = (props) => {
       localStorage.clear();
       history.push('/');
     }
+  }, [isAdmin, spotifyAuthorized]);
 
+  // initialize event source and close it when component unmounts
+  useEffect(() => {
     // register sse event source
     const eventSource = new EventSource(`${API_BASE_URL}/events/${user.username}/${user.sessionID}`);
     // listen for incoming playlist change events and set the state playlist accordingly
@@ -57,7 +59,7 @@ const MainView = (props) => {
     return () => {
       eventSource.close()
     }
-  }, [isAdmin, spotifyAuthorized]);
+  }, []);
 
   // sse handlers
   const handlePlaylistChange = data => {
