@@ -9,7 +9,7 @@ import {play, setPlayerState} from "../actions/player";
 import parsePlaylist from "../services/helpers/parsePlaylist";
 import {setPlaylist} from "../actions/playlist";
 import {API_BASE_URL} from "../services/backend/constants";
-import {deleteSession, desynchronize, fetchUserInfo} from "../actions/user";
+import {deleteSession, desynchronize, fetchUserInfo, synchronizeSuccess} from "../actions/user";
 import UserList from "../containers/UserList";
 import {setUserList} from "../actions/userList";
 import parseUserList from "../services/helpers/parseUserList";
@@ -47,6 +47,11 @@ const MainView = (props) => {
     eventSource.addEventListener(
       'sse:user_list_change',
       e => handleUserListChange(JSON.parse(e.data))
+    );
+    // listen for incoming user synchronized state change events
+    eventSource.addEventListener(
+      'sse:user_synchronized_change',
+      e => props.dispatch(synchronizeSuccess(JSON.parse(e.data)))
     );
 
     return () => {
