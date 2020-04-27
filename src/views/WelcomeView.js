@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ContentWrapper from '../components/ContentWrapper';
 import {Link, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
@@ -6,7 +6,10 @@ import {authenticate} from "../actions/user";
 
 const WelcomeView = (props) => {
   const {isLogged, user} = props;
-  if (user) props.dispatch(authenticate(user));
+  useEffect(() => {
+    if (user) props.dispatch(authenticate(user));
+  }, []);
+
 
   return (
     <ContentWrapper>
