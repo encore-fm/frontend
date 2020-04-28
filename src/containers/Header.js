@@ -77,7 +77,7 @@ const Header = (props) => {
   return (
     <header className="Header">
       <div className="Header__content">
-        <h1 className="Header_title"><Link to="/">encore.</Link></h1>
+        <h1 className="Header_title"><Link to={user ? "/player" : "/"}>encore.</Link></h1>
         <nav className="Header_navigation">
           {isLogged && (
             <ul>

@@ -1,39 +1,25 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {Redirect, useHistory} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 
 import PlayList from '../containers/PlayList';
 import SongSearch from '../containers/SongSearch';
 import Player from "../containers/Player";
-import {play, setPlayerState} from "../actions/player";
+import {setPlayerState} from "../actions/player";
 import parsePlaylist from "../services/helpers/parsePlaylist";
 import {setPlaylist} from "../actions/playlist";
 import {API_BASE_URL} from "../services/backend/constants";
-import {authenticate, deleteSession, setSynchronized} from "../actions/user";
+import {setSynchronized} from "../actions/user";
 import UserList from "../containers/UserList";
 import {setUserList} from "../actions/userList";
 import parseUserList from "../services/helpers/parseUserList";
 
 const MainView = (props) => {
   const {isLogged, menuOpen, user} = props;
-  const {isAdmin, spotifyAuthorized} = user;
-  const history = useHistory();
-
-  // authenticate user and update fields
-  useEffect(() => {
-    if (!user) return;
-    // dispatching fetchUserInfo overwrites the spotify synchronized field set by the sse
-    props.dispatch(authenticate(user));
-    // block an admin from accessing his session if he's not authenticated todo auth flow bug
-    if (user && user.isAdmin && user.spotifyAuthorized === false) {
-      props.dispatch(deleteSession(user));
-      localStorage.clear();
-      history.push('/');
-    }
-  }, [isAdmin, spotifyAuthorized]);
-
   // initialize event source and close it when component unmounts
   useEffect(() => {
+    if (!user) return;
+
     // register sse event source
     const eventSource = new EventSource(`${API_BASE_URL}/events/${user.username}/${user.sessionID}`);
     // listen for incoming playlist change events and set the state playlist accordingly
