@@ -1,11 +1,11 @@
 import {API_BASE_URL, STATUS_SUCCESS} from "../constants";
 import fetchWithData from "../../helpers/fetchWithData";
+import fetchWithoutData from "../../helpers/fetchWithoutData";
 
 class PlayerSynchronize {
   constructor(user) {
     this._status = STATUS_SUCCESS;
     this._user = user;
-    this._synchronized = false;
     this._error = null;
   }
 
@@ -19,8 +19,7 @@ class PlayerSynchronize {
         }
       });
 
-    return fetchWithData(syncRequest, this,
-        data => this._synchronized = data.synchronized);
+    return fetchWithoutData(syncRequest, this);
   }
 
   get status() {
@@ -29,10 +28,6 @@ class PlayerSynchronize {
 
   set status(value) {
     this._status = value;
-  }
-
-  get synchronized() {
-    return this._synchronized;
   }
 
   get error() {

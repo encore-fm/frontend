@@ -125,7 +125,7 @@ export const synchronize = user => {
   return createAsyncThunk(
     serviceInstance,
     true,
-    res => setSynchronized(res.synchronized),
+    null,
     res => synchronizeFailure(res.error)
   );
 };
@@ -139,7 +139,7 @@ export const desynchronize = user => {
   return createAsyncThunk(
     serviceInstance,
     false,
-    res => setSynchronized(res.synchronized),
+    null,
     res => desynchronizeFailure(res.error)
   );
 };
