@@ -2,7 +2,14 @@ import React, {useEffect} from 'react';
 import './Header.scss';
 import {Link, useHistory} from "react-router-dom";
 import {connect} from "react-redux";
-import {deleteSession, desynchronize, fetchUserInfo, leaveSession, logOut, synchronize} from "../actions/user";
+import {
+  authenticate,
+  deleteSession,
+  desynchronize,
+  leaveSession,
+  logOut,
+  synchronize
+} from "../actions/user";
 import IconMenu from "../components/icons/IconMenu";
 import IconClose from "../components/icons/IconClose";
 import {closeMenu, openMenu} from "../actions/menu";
@@ -12,7 +19,7 @@ const Header = (props) => {
   const {isLogged, menuOpen, user} = props;
 
   useEffect(() => {
-    if (user) props.dispatch(fetchUserInfo(user));
+    if (user) props.dispatch(authenticate(user));
   }, []);
 
   const handleSync = () => {
@@ -70,7 +77,7 @@ const Header = (props) => {
   return (
     <header className="Header">
       <div className="Header__content">
-        <h1 className="Header_title"><Link to="/">encore.</Link></h1>
+        <h1 className="Header_title"><Link to={user ? "/player" : "/"}>encore.</Link></h1>
         <nav className="Header_navigation">
           {isLogged && (
             <ul>

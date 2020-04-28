@@ -2,7 +2,7 @@ import {
   CREATE_SUCCESS, DELETE_SESSION_SUCCESS,
   FETCH_AUTH_TOKEN_SUCCESS,
   JOIN_SUCCESS, LEAVE_SUCCESS, LOG_OUT, SET_USER,
-  SYNCHRONIZE_SUCCESS
+  SET_SYNCHRONIZED
 } from "../actions/user";
 
 // sets the user in the store
@@ -17,9 +17,11 @@ export default (state = null, action) => {
         ...state,
         authToken: action.payload
       };
-    case SYNCHRONIZE_SUCCESS:
+    case SET_SYNCHRONIZED:
       return {
         ...state,
+        // synchronized implies spotify authorized
+        spotifyAuthorized: action.payload === true ? true : state.spotifyAuthorized,
         spotifySynchronized: action.payload,
       };
     case LEAVE_SUCCESS:

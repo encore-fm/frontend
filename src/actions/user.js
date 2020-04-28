@@ -25,7 +25,7 @@ export const FETCH_AUTH_TOKEN_SUCCESS = 'FETCH_AUTH_TOKEN_SUCCESS';
 export const FETCH_AUTH_TOKEN_FAILURE = 'FETCH_AUTH_TOKEN_FAILURE';
 export const AUTH_FAILURE = 'AUTH_FAILURE';
 
-export const SYNCHRONIZE_SUCCESS = 'SYNCHRONIZE_SUCCESS';
+export const SET_SYNCHRONIZED = 'SET_SYNCHRONIZED';
 export const SYNCHRONIZE_FAILURE = 'SYNCHRONIZE_FAILURE';
 
 export const DESYNCHRONIZE_FAILURE = 'DESYNCHRONIZE_FAILURE';
@@ -125,7 +125,7 @@ export const synchronize = user => {
   return createAsyncThunk(
     serviceInstance,
     true,
-    res => synchronizeSuccess(res.synchronized),
+    null,
     res => synchronizeFailure(res.error)
   );
 };
@@ -139,7 +139,7 @@ export const desynchronize = user => {
   return createAsyncThunk(
     serviceInstance,
     false,
-    res => synchronizeSuccess(res.synchronized),
+    null,
     res => desynchronizeFailure(res.error)
   );
 };
@@ -229,8 +229,8 @@ const fetchAuthTokenFailure = error => ({
   error: error
 });
 
-const synchronizeSuccess = synchronized => ({
-  type: SYNCHRONIZE_SUCCESS,
+export const setSynchronized = synchronized => ({
+  type: SET_SYNCHRONIZED,
   payload: synchronized,
   error: null
 });
