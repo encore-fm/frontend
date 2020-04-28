@@ -20,6 +20,8 @@ export default (state = null, action) => {
     case SET_SYNCHRONIZED:
       return {
         ...state,
+        // synchronized implies spotify authorized
+        spotifyAuthorized: action.payload === true ? true : state.spotifyAuthorized,
         spotifySynchronized: action.payload,
       };
     case LEAVE_SUCCESS:

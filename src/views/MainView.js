@@ -9,7 +9,7 @@ import {play, setPlayerState} from "../actions/player";
 import parsePlaylist from "../services/helpers/parsePlaylist";
 import {setPlaylist} from "../actions/playlist";
 import {API_BASE_URL} from "../services/backend/constants";
-import {deleteSession, fetchUserInfo, setSynchronized} from "../actions/user";
+import {authenticate, deleteSession, setSynchronized} from "../actions/user";
 import UserList from "../containers/UserList";
 import {setUserList} from "../actions/userList";
 import parseUserList from "../services/helpers/parseUserList";
@@ -22,8 +22,9 @@ const MainView = (props) => {
   // authenticate user and update fields
   useEffect(() => {
     if (!user) return;
-    props.dispatch(fetchUserInfo(user));
-    // block an admin from accessing his session if he's not authenticated (auth flow bug)
+    // dispatching fetchUserInfo overwrites the spotify synchronized field set by the sse
+    props.dispatch(authenticate(user));
+    // block an admin from accessing his session if he's not authenticated todo auth flow bug
     if (user && user.isAdmin && user.spotifyAuthorized === false) {
       props.dispatch(deleteSession(user));
       localStorage.clear();
@@ -53,7 +54,7 @@ const MainView = (props) => {
     // listen for incoming user synchronized state change events
     eventSource.addEventListener(
       'sse:user_synchronized_change',
-      e => props.dispatch(handleUserSynchronizedChange(JSON.parse(e.data)))
+      e => handleUserSynchronizedChange(JSON.parse(e.data))
     );
 
     return () => {
@@ -73,7 +74,10 @@ const MainView = (props) => {
     const newUserList = parseUserList(data);
     props.dispatch(setUserList(newUserList));
   };
-  const handleUserSynchronizedChange = data => props.dispatch(setSynchronized(data.synchronized));
+  const handleUserSynchronizedChange = data => {
+    if (data.user_id === user.id)
+      props.dispatch(setSynchronized(data.synchronized));
+  };
 
   const renderIsLogged = () => {
     const path = window.location.pathname;
