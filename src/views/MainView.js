@@ -13,6 +13,7 @@ import {setSynchronized} from "../actions/user";
 import UserList from "../containers/UserList";
 import {setUserList} from "../actions/userList";
 import parseUserList from "../services/helpers/parseUserList";
+import ForceSyncOption from "../components/ForceSyncOption";
 
 const MainView = (props) => {
   const {isLogged, menuOpen, user} = props;
@@ -69,6 +70,7 @@ const MainView = (props) => {
     const path = window.location.pathname;
     return (
       <React.Fragment>
+        {menuOpen && <ForceSyncOption />}
         {menuOpen && <UserList/>}
         {!menuOpen && path === '/player' && <PlayList/>}
         {!menuOpen && path === '/add' && <SongSearch/>}
