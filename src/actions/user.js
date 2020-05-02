@@ -4,11 +4,11 @@ import FetchAuthToken from "../services/backend/fetching/FetchAuthToken";
 import createAsyncThunk from "./helpers/createAsyncThunk";
 import EncoreAuth from "../services/backend/EncoreAuth";
 import PlayerSynchronize from "../services/backend/user/PlayerSynchronize";
-import PlayerDesynchronize from "../services/backend/user/PlayerDesynchronize";
 import LeaveSession from "../services/backend/user/LeaveSession";
 import DeleteSession from "../services/backend/user/DeleteSession";
 import FetchUserInfo from "../services/backend/fetching/FetchUserInfo";
 import ReactGA from "react-ga";
+import SetSyncMode from "../services/backend/user/SetSyncMode";
 
 export const CREATE_SUCCESS = 'CREATE_SUCCESS';
 export const CREATE_FAILURE = 'CREATE_FAILURE';
@@ -28,7 +28,8 @@ export const AUTH_FAILURE = 'AUTH_FAILURE';
 export const SET_SYNCHRONIZED = 'SET_SYNCHRONIZED';
 export const SYNCHRONIZE_FAILURE = 'SYNCHRONIZE_FAILURE';
 
-export const DESYNCHRONIZE_FAILURE = 'DESYNCHRONIZE_FAILURE';
+export const SET_SYNC_MODE_FAILURE = 'SET_SYNC_MODE_FAILURE';
+export const SET_SYNC_MODE_SUCCESS = 'SET_SYNC_MODE_SUCCESS';
 
 export const createSession = adminName => {
   ReactGA.event({
@@ -116,6 +117,21 @@ export const authenticate = user => {
   );
 };
 
+export const setSyncMode = (user, syncMode) => {
+  ReactGA.event({
+    category: 'User',
+    action: 'setSyncMode'
+  });
+  let serviceInstance = new SetSyncMode(user, syncMode);
+  return createAsyncThunk(
+    serviceInstance,
+    true,
+    res => setSyncModeSuccess(res.syncMode),
+    res => setSyncModeFailure(res.error)
+  );
+};
+
+
 export const synchronize = user => {
   ReactGA.event({
     category: 'User',
@@ -127,20 +143,6 @@ export const synchronize = user => {
     true,
     null,
     res => synchronizeFailure(res.error)
-  );
-};
-
-export const desynchronize = user => {
-  ReactGA.event({
-    category: 'User',
-    action: 'desynchronize'
-  });
-  let serviceInstance = new PlayerDesynchronize(user);
-  return createAsyncThunk(
-    serviceInstance,
-    false,
-    null,
-    res => desynchronizeFailure(res.error)
   );
 };
 
@@ -241,8 +243,14 @@ const synchronizeFailure = error => ({
   error: error
 });
 
-const desynchronizeFailure = error => ({
-  type: DESYNCHRONIZE_FAILURE,
+const setSyncModeFailure = error => ({
+  type: SET_SYNC_MODE_FAILURE,
   payload: null,
   error: error
+});
+
+const setSyncModeSuccess = syncMode => ({
+  type: SET_SYNC_MODE_SUCCESS,
+  payload: syncMode,
+  error: null
 });

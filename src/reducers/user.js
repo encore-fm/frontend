@@ -2,7 +2,7 @@ import {
   CREATE_SUCCESS, DELETE_SESSION_SUCCESS,
   FETCH_AUTH_TOKEN_SUCCESS,
   JOIN_SUCCESS, LEAVE_SUCCESS, LOG_OUT, SET_USER,
-  SET_SYNCHRONIZED
+  SET_SYNCHRONIZED, SET_SYNC_MODE_SUCCESS
 } from "../actions/user";
 
 // sets the user in the store
@@ -16,6 +16,11 @@ export default (state = null, action) => {
       return {
         ...state,
         authToken: action.payload
+      };
+    case SET_SYNC_MODE_SUCCESS:
+      return {
+        ...state,
+        syncMode: action.payload,
       };
     case SET_SYNCHRONIZED:
       return {

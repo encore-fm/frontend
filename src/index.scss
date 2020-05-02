@@ -15,10 +15,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
   monospace;
 }
-
-::selection {
-  background: $highlight_color; /* WebKit/Blink Browsers */
-}
-::-moz-selection {
-  background: $highlight_color; /* Gecko Browsers */
-}

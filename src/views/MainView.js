@@ -9,11 +9,13 @@ import {setPlayerState} from "../actions/player";
 import parsePlaylist from "../services/helpers/parsePlaylist";
 import {setPlaylist} from "../actions/playlist";
 import {API_BASE_URL} from "../services/backend/constants";
-import {setSynchronized} from "../actions/user";
+import {setSynchronized, setSyncMode} from "../actions/user";
 import UserList from "../containers/UserList";
 import {setUserList} from "../actions/userList";
 import parseUserList from "../services/helpers/parseUserList";
 import ForceSyncOption from "../components/ForceSyncOption";
+
+import './MainView.scss';
 
 const MainView = (props) => {
   const {isLogged, menuOpen, user} = props;
@@ -55,26 +57,45 @@ const MainView = (props) => {
     const newPlaylist = parsePlaylist(data);
     props.dispatch(setPlaylist(newPlaylist));
   };
+
   const handlePlayerStateChange = data => props.dispatch(setPlayerState(data));
+
   const handleUserListChange = data => {
     if (!data) return;
     const newUserList = parseUserList(data);
     props.dispatch(setUserList(newUserList));
   };
+
   const handleUserSynchronizedChange = data => {
     if (data.user_id === user.id)
       props.dispatch(setSynchronized(data.synchronized));
+  };
+
+  const handleSyncModeChange = syncMode => {
+    props.dispatch(setSyncMode(user, syncMode))
+  };
+
+  const redirectAuthorize = () => {
+    if (isLogged) {
+      window.open(user.authUrl, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
+    }
   };
 
   const renderIsLogged = () => {
     const path = window.location.pathname;
     return (
       <React.Fragment>
-        {menuOpen && <ForceSyncOption />}
+        {menuOpen && user.spotifyAuthorized &&
+        <ForceSyncOption syncMode={user.syncMode} handleChange={handleSyncModeChange}/>}
+        {menuOpen && !user.spotifyAuthorized && (
+          <div className="AuthSpotify" >
+            <span onClick={redirectAuthorize}>authorize spotify</span>
+          </div>
+        )}
         {menuOpen && <UserList/>}
         {!menuOpen && path === '/player' && <PlayList/>}
         {!menuOpen && path === '/add' && <SongSearch/>}
-        <Player />
+        <Player/>
       </React.Fragment>
     )
   };

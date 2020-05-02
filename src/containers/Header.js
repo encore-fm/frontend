@@ -5,10 +5,8 @@ import {connect} from "react-redux";
 import {
   authenticate,
   deleteSession,
-  desynchronize,
   leaveSession,
   logOut,
-  synchronize
 } from "../actions/user";
 import IconMenu from "../components/icons/IconMenu";
 import IconClose from "../components/icons/IconClose";
@@ -21,22 +19,7 @@ const Header = (props) => {
   useEffect(() => {
     if (user) props.dispatch(authenticate(user));
   }, []);
-
-  const handleSync = () => {
-    // handle sync normally
-    if (user.spotifyAuthorized) {
-      user.spotifySynchronized
-        ? props.dispatch(desynchronize(user))
-        : props.dispatch(synchronize(user))
-    } else {
-      // ask user to authorize
-      if (!window.confirm('You need to connect to Spotify to synchronize.\nConnect to Spotify?')) return;
-
-      // redirect user to Spotify
-      window.open(user.authUrl, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
-    }
-  };
-
+  
   const handleMenuClose = () => {
     props.dispatch(closeMenu())
   };
@@ -81,11 +64,6 @@ const Header = (props) => {
         <nav className="Header_navigation">
           {isLogged && (
             <ul>
-              <li
-                onClick={handleSync}
-                className={`Header__syncButton${!user.spotifySynchronized ? ' disabled' : ''}`}
-              >sync
-              </li>
               <li><Link to="/add" onClick={handleClickAdd}>add</Link></li>
               <li>
                 {!menuOpen
