@@ -3,6 +3,7 @@ import ContentWrapper from '../components/ContentWrapper';
 import {Link, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {authenticate} from "../actions/user";
+import ForceSyncOption from "../components/ForceSyncOption";
 
 const WelcomeView = (props) => {
   const {isLogged, user} = props;

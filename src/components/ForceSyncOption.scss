@@ -18,7 +18,9 @@
     color: $text_color;
     border: 1px solid $text_color;
     border-radius: 0;
+    text-align: center;
     text-align-last: center;
+    -moz-text-align-last: center;
 
     &:hover {
       background-color: $text_color;
@@ -29,6 +31,5 @@
 
 .ForceSyncOption__info {
   color: $highlight_color;
-  font-weight: bolder;
   margin-top: 0.3em;
 }
