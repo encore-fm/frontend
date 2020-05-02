@@ -6,7 +6,7 @@ export const VOTE_SONG_FAILURE = 'VOTE_SONG_FAILURE';
 
 export const voteSong = (user, songID, voteAction) => {
   ReactGA.event({
-    category: 'User',
+    category: 'Song',
     action: `vote_${voteAction}`
   });
   let serviceInstance = new VoteSong(user, songID, voteAction);
