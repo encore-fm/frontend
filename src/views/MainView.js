@@ -121,6 +121,8 @@ const MainView = (props) => {
     };
   };
 
+  // defining the Spotify script here as opposed to index.html ensures that window.onSpotifyWebPlaybackSDKReady is
+  // defined when the script is loaded.
   return (
     <div className="MainView">
       <Script url="https://sdk.scdn.co/spotify-player.js" onLoad={initializePlayer}/>
