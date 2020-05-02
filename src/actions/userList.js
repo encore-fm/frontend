@@ -16,7 +16,7 @@ export const fetchUserList = user => {
 
 export const setUserList = userList => ({
   type: SET_USER_LIST,
-  payload: userList,
+  payload: userList.sort((a, b) => b.score - a.score),
   error: null
 });
 

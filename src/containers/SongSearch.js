@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
 import SearchTextField from "../components/SearchTextField";
-import {clearSongs, fetchFavouriteSongs, fetchSongs} from "../actions/songs";
+import {fetchFavouriteSongs, fetchSongs} from "../actions/songs";
 import SearchResults from "../components/SearchResults";
 import {fetchClientToken} from "../actions/clientToken";
 

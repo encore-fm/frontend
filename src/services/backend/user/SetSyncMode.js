@@ -1,25 +1,25 @@
 import {API_BASE_URL, STATUS_SUCCESS} from "../constants";
-import fetchWithData from "../../helpers/fetchWithData";
 import fetchWithoutData from "../../helpers/fetchWithoutData";
 
-class PlayerDesynchronize {
-  constructor(user) {
+class SetSyncMode {
+  constructor(user, syncMode) {
     this._status = STATUS_SUCCESS;
     this._user = user;
+    this._syncMode = syncMode;
     this._error = null;
   }
 
   perform() {
-    let desyncRequest = new Request(`${API_BASE_URL}/users/${this._user.username}/player/desynchronize`,
+    let syncModeRequest = new Request(`${API_BASE_URL}/users/${this._user.username}/setSyncMode/${this.syncMode}`,
       {
         method: 'POST',
         headers: {
           "Authorization": this._user.secret,
-          "Session": this._user.sessionID
+          "Session": this._user.sessionID,
         }
       });
 
-    return fetchWithoutData(desyncRequest, this);
+    return fetchWithoutData(syncModeRequest, this);
   }
 
   get status() {
@@ -28,6 +28,10 @@ class PlayerDesynchronize {
 
   set status(value) {
     this._status = value;
+  }
+
+  get syncMode() {
+    return this._syncMode;
   }
 
   get error() {
@@ -39,4 +43,4 @@ class PlayerDesynchronize {
   }
 }
 
-export default PlayerDesynchronize;
+export default SetSyncMode;

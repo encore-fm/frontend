@@ -1,0 +1,13 @@
+@import "../variables";
+
+.AuthSpotify {
+  padding: 1em;
+
+  span {
+    color: $highlight_color;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+}

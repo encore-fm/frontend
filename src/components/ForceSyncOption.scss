@@ -1,0 +1,35 @@
+@import "../variables";
+
+.ForceSyncOption {
+  padding: 1em;
+
+  select {
+    margin-left: 1em;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+
+    cursor: pointer;
+
+    padding: 0.2em 0.2em;
+
+    background-color: $background_color;
+    color: $text_color;
+    border: 1px solid $text_color;
+    border-radius: 0;
+    text-align: center;
+    text-align-last: center;
+    -moz-text-align-last: center;
+
+    &:hover {
+      background-color: $text_color;
+      color: $background_color;
+    }
+  }
+}
+
+.ForceSyncOption__info {
+  color: $highlight_color;
+  margin-top: 0.3em;
+}

@@ -1,5 +1,7 @@
 // parses the user data received after creating or joining a session
 // comes from backend separated in user_info and auth_url
+import {SYNC_OPTIONS} from "../../components/ForceSyncOption";
+
 export const parseInitialUserData = (user, data) => {
   return {
     ...user,
@@ -10,7 +12,7 @@ export const parseInitialUserData = (user, data) => {
     score: data.user_info.score,
     authUrl: data.auth_url,
     spotifyAuthorized: data.spotify_authorized,
-    spotifySynchronized: data.spotify_synchronized,
+    syncMode: SYNC_OPTIONS.AUTO,
   }
 };
 
@@ -24,6 +26,6 @@ export const parseUserInfo = (user, data) => {
     isAdmin: data.is_admin,
     score: data.score,
     spotifyAuthorized: data.spotify_authorized,
-    spotifySynchronized: data.spotify_synchronized,
+    syncMode: data.sync_mode,
   }
 };
