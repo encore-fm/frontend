@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
+import Script from 'react-load-script'
 
 import PlayList from '../containers/PlayList';
 import SongSearch from '../containers/SongSearch';
@@ -9,7 +10,7 @@ import {setPlayerState} from "../actions/player";
 import parsePlaylist from "../services/helpers/parsePlaylist";
 import {setPlaylist} from "../actions/playlist";
 import {API_BASE_URL} from "../services/backend/constants";
-import {setSynchronized, setSyncMode} from "../actions/user";
+import {fetchAuthToken, setSynchronized, setSyncMode} from "../actions/user";
 import UserList from "../containers/UserList";
 import {setUserList} from "../actions/userList";
 import parseUserList from "../services/helpers/parseUserList";
@@ -100,8 +101,29 @@ const MainView = (props) => {
     )
   };
 
+  // initialize Spotify web player
+  const initializePlayer = () => {
+    window.onSpotifyWebPlaybackSDKReady = () => {
+      const player = new window.Spotify.Player({
+        name: 'encore.',
+        getOAuthToken: callback => {
+          // fetch a new token every time the old one expires
+          props.dispatch(fetchAuthToken(user))
+            .then(res => {
+              let token = res.authToken;
+              callback(token)
+            });
+        }
+      });
+      player.connect();
+      // force backend to look for newly connected device as soon as player is ready
+      player.addListener('ready', () => props.dispatch(setSyncMode(user, user.syncMode)));
+    };
+  };
+
   return (
     <div className="MainView">
+      <Script url="https://sdk.scdn.co/spotify-player.js" onLoad={initializePlayer}/>
       {isLogged ? renderIsLogged() : <Redirect to="/"/>}
     </div>
   )

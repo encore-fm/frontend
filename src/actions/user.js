@@ -102,7 +102,7 @@ export const fetchAuthToken = user => {
   return createAsyncThunk(
     serviceInstance,
     true,
-    res => fetchAuthTokenSuccess(res.user.authToken),
+    res => fetchAuthTokenSuccess(res.authToken),
     res => fetchAuthTokenFailure(res.error)
   );
 };
