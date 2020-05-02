@@ -120,7 +120,7 @@ export const authenticate = user => {
 export const setSyncMode = (user, syncMode) => {
   ReactGA.event({
     category: 'User',
-    action: 'setSyncMode'
+    action: `setSyncMode_${syncMode}`
   });
   let serviceInstance = new SetSyncMode(user, syncMode);
   return createAsyncThunk(
