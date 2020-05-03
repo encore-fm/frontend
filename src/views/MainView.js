@@ -116,7 +116,7 @@ const MainView = (props) => {
         }
       });
       player.connect();
-      // force backend to look for newly connected device as soon as player is ready
+      // notify backend about newly connected device as soon as it's ready
       player.addListener('ready', () => props.dispatch(setSyncMode(user, user.syncMode)));
     };
   };
