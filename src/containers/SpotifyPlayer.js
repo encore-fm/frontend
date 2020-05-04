@@ -2,6 +2,7 @@ import {fetchAuthToken, setSyncMode} from "../actions/user";
 import Script from "react-load-script";
 import React from "react";
 import {connect} from 'react-redux';
+import {SYNC_OPTIONS} from "../components/ForceSyncOption";
 
 const SpotifyPlayer = (props) => {
   const {user} = props;
@@ -23,7 +24,9 @@ const SpotifyPlayer = (props) => {
       player.connect();
       // notify backend about newly connected device as soon as it's ready
       player.addListener('ready', () => {
-        props.dispatch(setSyncMode(user, user.syncMode));
+        const syncMode = user.syncMode;
+        props.dispatch(setSyncMode(user, SYNC_OPTIONS.FORCE_SYNC));
+        props.dispatch(setSyncMode(user, syncMode));
       });
     };
   };
