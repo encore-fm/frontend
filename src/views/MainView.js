@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
+import Script from 'react-load-script'
 
 import PlayList from '../containers/PlayList';
 import SongSearch from '../containers/SongSearch';
@@ -9,7 +10,7 @@ import {setPlayerState} from "../actions/player";
 import parsePlaylist from "../services/helpers/parsePlaylist";
 import {setPlaylist} from "../actions/playlist";
 import {API_BASE_URL} from "../services/backend/constants";
-import {setSynchronized, setSyncMode} from "../actions/user";
+import {fetchAuthToken, setSynchronized, setSyncMode} from "../actions/user";
 import UserList from "../containers/UserList";
 import {setUserList} from "../actions/userList";
 import parseUserList from "../services/helpers/parseUserList";
@@ -100,6 +101,8 @@ const MainView = (props) => {
     )
   };
 
+  // defining the Spotify script here as opposed to index.html ensures that window.onSpotifyWebPlaybackSDKReady is
+  // defined when the script is loaded.
   return (
     <div className="MainView">
       {isLogged ? renderIsLogged() : <Redirect to="/"/>}

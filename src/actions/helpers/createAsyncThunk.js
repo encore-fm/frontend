@@ -21,7 +21,8 @@ export default (
         } else if (res.status === STATUS_UNAUTHORIZED) {
           if (atUnauthorized) dispatch(atUnauthorized(res));
         } else
-            if (atFailure) dispatch(atFailure(res))
+            if (atFailure) dispatch(atFailure(res));
+        return res;
       });
   }
 }

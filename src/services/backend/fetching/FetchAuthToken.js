@@ -5,26 +5,27 @@ class FetchAuthToken {
   constructor(user) {
     this._status = STATUS_SUCCESS;
     this._user = user;
+    this._authToken = null;
     this._error = null;
   }
 
   // fetches the user's auth token, updates it and returns the user
   perform() {
-    let clientTokenRequest = new Request(`${API_BASE_URL}/users/${this.user.username}/authToken`,
+    let clientTokenRequest = new Request(`${API_BASE_URL}/users/${this._user.username}/authToken`,
       {
         headers: {
-          "Authorization": this.user.secret,
-          "Session": this.user.sessionID
+          "Authorization": this._user.secret,
+          "Session": this._user.sessionID
         }
       });
 
     return fetchWithData(clientTokenRequest, this,
-        data => this.user.authToken = data.access_token);
+        data => this._authToken = data.access_token);
   }
 
 
-  get user() {
-    return this._user;
+  get authToken() {
+    return this._authToken;
   }
 
   get status() {

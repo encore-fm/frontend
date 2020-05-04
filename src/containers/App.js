@@ -17,6 +17,7 @@ import {connect} from "react-redux";
 import {REQUEST_NOT_AUTHORIZED_ERROR} from "../services/backend/constants";
 import SessionNotFoundView from "../views/SessionNotFoundView";
 import {withTracker} from "./withTracker";
+import SpotifyPlayer from "./SpotifyPlayer";
 
 const App = (props) => {
   const {error} = props;
@@ -36,6 +37,7 @@ const App = (props) => {
           <Route path="/get-started" component={withTracker(GetStartedView)}/>
           <Route path="/session-not-found" component={withTracker(SessionNotFoundView)}/>
         </Switch>
+        <SpotifyPlayer/>
         {error.error === REQUEST_NOT_AUTHORIZED_ERROR && <Redirect to="/session-not-found"/>}
       </div>
     </Router>
