@@ -25,14 +25,14 @@ const SpotifyPlayer = (props) => {
       // notify backend about newly connected device as soon as it's ready
       player.addListener('ready', () => {
         const syncMode = user.syncMode;
-        props.dispatch(setSyncMode(user, SYNC_OPTIONS.FORCE_SYNC));
-        props.dispatch(setSyncMode(user, syncMode));
+        props.dispatch(setSyncMode(user, SYNC_OPTIONS.FORCE_SYNC))
+          .then(_ => props.dispatch(setSyncMode(user, syncMode)));
       });
     };
   };
 
   return (
-    <Script url="https://sdk.scdn.co/spotify-player.js" onLoad={initializePlayer}/>
+    <Script url="https://sdk.scdn.co/spotify-player.js" onCreate={initializePlayer}/>
   );
 };
 
