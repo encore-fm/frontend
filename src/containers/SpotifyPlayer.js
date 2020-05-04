@@ -6,7 +6,7 @@ import {SYNC_OPTIONS} from "../components/ForceSyncOption";
 
 const SpotifyPlayer = (props) => {
   const {user} = props;
-  if (!user) return "";
+  if (!user || !user.spotifyAuthorized) return "";
   // initialize Spotify web player
   const initializePlayer = () => {
     window.onSpotifyWebPlaybackSDKReady = () => {
