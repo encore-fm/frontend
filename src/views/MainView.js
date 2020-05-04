@@ -101,31 +101,10 @@ const MainView = (props) => {
     )
   };
 
-  // initialize Spotify web player
-  const initializePlayer = () => {
-    window.onSpotifyWebPlaybackSDKReady = () => {
-      const player = new window.Spotify.Player({
-        name: 'encore.',
-        getOAuthToken: callback => {
-          // fetch a new token every time the old one expires
-          props.dispatch(fetchAuthToken(user))
-            .then(res => {
-              let token = res.authToken;
-              callback(token)
-            });
-        }
-      });
-      player.connect();
-      // notify backend about newly connected device as soon as it's ready
-      player.addListener('ready', () => props.dispatch(setSyncMode(user, user.syncMode)));
-    };
-  };
-
   // defining the Spotify script here as opposed to index.html ensures that window.onSpotifyWebPlaybackSDKReady is
   // defined when the script is loaded.
   return (
     <div className="MainView">
-      <Script url="https://sdk.scdn.co/spotify-player.js" onLoad={initializePlayer}/>
       {isLogged ? renderIsLogged() : <Redirect to="/"/>}
     </div>
   )
