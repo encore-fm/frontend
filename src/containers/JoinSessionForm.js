@@ -108,11 +108,11 @@ const JoinSessionForm = (props) => {
   const renderStageAuth = () => {
     return (
       <div>
-        do you want to authorize spotify?<br/>
-        if you don't do that you only can vote on songs.<br/>
+        Would you like to connect your Spotify?<br/>
+        If you don't you can still suggest and vote for songs.<br/>
         <br/>
 
-        <Button style={{marginRight: '1em'}} type="text" text="authorize" onClick={redirectAuthorize}/>
+        <Button style={{marginRight: '1em'}} type="text" text="connect spotify" onClick={redirectAuthorize}/>
         <Button type="submit" text="just vote" onClick={redirectPlayer}/>
       </div>
     )

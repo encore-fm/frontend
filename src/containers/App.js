@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Redirect, Route, Switch, useHistory} from 'react-router-dom';
+import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 
 import Header from './Header';
 
@@ -18,9 +18,27 @@ import {REQUEST_NOT_AUTHORIZED_ERROR} from "../services/backend/constants";
 import SessionNotFoundView from "../views/SessionNotFoundView";
 import {withTracker} from "./withTracker";
 import SpotifyPlayer from "./SpotifyPlayer";
+import {logOut} from "../actions/user";
 
 const App = (props) => {
   const {error} = props;
+
+  // redirects the user to the SessionNotFound page if authentication fails
+  // ignores the authentication failure if the user is attempting to join a new session, fixes join bug
+  const shouldRedirect = () => {
+    const firstPathComponent = window.location.pathname.split('/')[1];
+    const notAuthorized = error.error === REQUEST_NOT_AUTHORIZED_ERROR;
+
+    // if old session is not found and user wants to join a new session, clear data and continue to join page
+    if (notAuthorized && firstPathComponent === 'join') {
+      props.dispatch(logOut());
+    } else if (notAuthorized) { // old session not found -> redirect
+      return true
+    }
+
+    // do not redirect
+    return false;
+  };
 
   return (
     <Router>
@@ -38,7 +56,7 @@ const App = (props) => {
           <Route path="/session-not-found" component={withTracker(SessionNotFoundView)}/>
         </Switch>
         <SpotifyPlayer/>
-        {error.error === REQUEST_NOT_AUTHORIZED_ERROR && <Redirect to="/session-not-found"/>}
+        {shouldRedirect() && <Redirect to="/session-not-found"/>}
       </div>
     </Router>
   );
